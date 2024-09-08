@@ -48,10 +48,10 @@ private:
 	SDL_Renderer* mRenderer;
 	// OpenGL context
 	SDL_GLContext mContext;
-	void InitSpriteVerts();
+	void CreateVertexInfo();
 	bool LoadShaders();
 	// バーテックス配列オブジェクト
-	class VertexArray* mSpriteVerts;
+	class VertexInfo* mVertexInfo;
 	// シェーダー
-	class Shader* mSpriteShader;
+	class Shader* mShader;
 };

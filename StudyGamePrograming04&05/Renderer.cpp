@@ -5,14 +5,14 @@
 #include "SpriteComponent.h"
 #include <glew.h>
 #include "Shader.h"
-#include "VertexArray.h"
+#include "VertexInfo.h"
 #include "Texture.h"
 
 Renderer::Renderer(Game* game)
-	:mGame(game)
+	: mGame(game)
 	, mWindow(nullptr)
-	, mSpriteShader(nullptr)
-	, mSpriteVerts(nullptr)
+	, mShader(nullptr)
+	, mVertexInfo(nullptr)
 {}
 
 Renderer::~Renderer()
@@ -69,7 +69,7 @@ bool Renderer::Initialize(float screenWidth, float screenHeight)
 	glGetError();
 
 	// バーテックス配列オブジェクトの生成
-	InitSpriteVerts();
+	CreateVertexInfo();
 
 	// シェーダーの生成
 	if (!LoadShaders())
@@ -89,9 +89,9 @@ void Renderer::UnloadData()
 
 void Renderer::Shutdown()
 {
-	delete mSpriteVerts;
-	mSpriteShader->Unload();
-	delete mSpriteShader;
+	delete mVertexInfo;
+	mShader->Unload();
+	delete mShader;
 	SDL_GL_DeleteContext(mContext);
 	SDL_DestroyWindow(mWindow);
 }
@@ -100,7 +100,7 @@ void Renderer::Shutdown()
 void Renderer::Draw()
 {
 	// 背景色を指定して画面をクリア
-	glClearColor(0.86f, 0.86f, 0.86f, 1.0f);
+	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 	// カラーバッファのアルファブレンディングを有効化
 	glEnable(GL_BLEND);
@@ -110,13 +110,13 @@ void Renderer::Draw()
 	);
 
 	// シェーダーとバーテックス配列オブジェクトを有効化
-	mSpriteVerts->SetActive();
-	mSpriteShader->SetActive();
+	mVertexInfo->SetActive();
+	mShader->SetActive();
 	for (auto sprite : mSprites)
 	{
 		if (sprite->GetVisible())
 		{
-			sprite->Draw(mSpriteShader);
+			sprite->Draw(mShader);
 		}
 	}
 	// ダブルバッファを交換
@@ -169,34 +169,65 @@ class Texture* Renderer::GetTexture(const std::string& filename)
 	return tex;
 }
 
-void Renderer::InitSpriteVerts()
+void Renderer::CreateVertexInfo()
 {
-	float vertices[] = {
-		-0.5f, 0.5f, 0.0f, 0.0f, 0.0f,			// 左上 (インデックス 0) , テクスチャ座標左下
-		-0.5f, -0.5f, 0.0f, 0.0f, 1.0f,			// 左下 (インデックス 1) , テクスチャ座標左上
-		0.5f, -0.5f, 0.0f, 1.0f, 1.0f,			// 右下 (インデックス 2) , テクスチャ座標右上
-		0.5f, 0.5f, 0.0f, 1.0f, 0.0f			// 右上 (インデックス 3) , テクスチャ座標右下
+	int numVerts = 8;		//頂点の数
+	//頂点座標(vector3)
+	float vertPos[] = {
+		-0.5f, 0.5f, 0.0f, 				// 手前左上 (インデックス 0) 
+		-0.5f, -0.5f, 0.0f, 			// 手前左下 (インデックス 1)
+		0.5f, -0.5f, 0.0f, 				// 手前右下 (インデックス 2)
+		0.5f, 0.5f, 0.0f,	 			// 手前右上 (インデックス 3)
+		-0.5f, 0.5f, -1.0f, 				// 奥左上 (インデックス 4) 
+		-0.5f, -0.5f, -1.0f, 			// 奥左下 (インデックス 5)
+		0.5f, -0.5f, -1.0f, 				// 奥右下 (インデックス 6)
+		0.5f, 0.5f, -1.0f	 			// 奥右上 (インデックス 7)
+	};
+	//テクスチャ座標(vector2)
+	float texCoord[] = {
+		0.0f, 0.0f,			//テクスチャ座標左下
+		0.0f, 1.0f,			//テクスチャ座標左上
+		1.0f, 1.0f,			//テクスチャ座標右上
+		1.0f, 0.0f,			//テクスチャ座標右下
+		0.0f, 0.0f,			//テクスチャ座標左下
+		0.0f, 1.0f,			//テクスチャ座標左上
+		1.0f, 1.0f,			//テクスチャ座標右上
+		1.0f, 0.0f			//テクスチャ座標右下
+	};
+	//頂点カラー(vector4 RGBA)
+	float vertColor[] = {
+		1.0f, 0.0f, 0.0f, 1.0f,		//R
+		0.0f, 1.0f, 0.0f, 1.0f,		//G
+		0.0f, 0.0f, 1.0f, 1.0f,		//B
+		1.0f, 1.0f, 1.0f, 1.0f,		//W
+		1.0f, 0.0f, 0.0f, 1.0f,		//R
+		0.0f, 1.0f, 0.0f, 1.0f,		//G
+		0.0f, 0.0f, 1.0f, 1.0f,		//B
+		1.0f, 1.0f, 1.0f, 1.0f		//W
 	};
 
+	//インデックス
 	unsigned int indices[] = {
-		0, 1, 2,
-		2, 3, 0
+		//0, 1, 2,		//手前①
+		//2, 3, 0,		//手前②
+		7, 6, 5,		//奥①
+		5, 4, 7			//奥②
 	};
 
-	mSpriteVerts = new VertexArray(vertices, 4, indices, 6);
+	mVertexInfo = new VertexInfo(numVerts, vertPos, texCoord, vertColor, indices);
 }
 
 bool Renderer::LoadShaders()
 {
 	// シェーダーを生成
-	mSpriteShader = new Shader();
-	if (!mSpriteShader->Load("Shaders/Sprite.vert", "Shaders/Sprite.frag"))
+	mShader = new Shader();
+	if (!mShader->Load("Shaders/shader.vert", "Shaders/shader.frag"))
 	{
 		return false;
 	}
-	mSpriteShader->SetActive();
+	mShader->SetActive();
 	// ビュー変換行列を作成。ここでは平行投影変換を行う。
 	Matrix4 viewProj = Matrix4::CreateSimpleViewProj(mScreenWidth, mScreenHeight);
-	mSpriteShader->SetMatrixUniform("uViewProj", viewProj);
+	mShader->SetMatrixUniform("uViewProj", viewProj);
 	return true;
 }
