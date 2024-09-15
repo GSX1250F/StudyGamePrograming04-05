@@ -117,6 +117,7 @@ void Brave::ActorInput(const SDL_Event& event){
 
 void Brave::UpdateActor(float deltaTime){
 	if (GetGame()->GetMaze()->GetGameStart()) {
+		GetGame()->GetMaze()->SetClearPictPos(GetPosition());
 		if (Intersect(*cc, *GetGame()->GetMaze()->GetTreasure()->GetCircle())) {
 			// ƒS[ƒ‹
 			GetGame()->GetMaze()->SetGameClear(true);

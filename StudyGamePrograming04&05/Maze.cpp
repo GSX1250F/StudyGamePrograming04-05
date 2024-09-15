@@ -197,6 +197,11 @@ Tile* Maze::GetGoalTile()
 	return mTiles[goali][goalj];
 }
 
+void Maze::SetClearPictPos(Vector3 pos)
+{
+	mClearPict->SetPosition(pos);
+}
+
 void Maze::MakeGraphNodes(std::vector<std::vector<class Tile*>> &tiles)
 {
 	for (int i = 0; i < tiles.size(); i++) {
