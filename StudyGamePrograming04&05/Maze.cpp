@@ -177,11 +177,11 @@ void Maze::GenerateMap()
 	}
 }
 
-Vector2 Maze::GetTilePos(int i, int j)
+Vector3 Maze::GetTilePos(int i, int j)
 {
 	//Vector2 pos = mTileSize * Vector2((i + 1) * 1.0f, (j + 1) * 1.0f);
 	Vector2 pos = mTileSize * (Vector2((i + 1) * 1.0f, (j + 1) * 1.0f) + Vector2(-mMapWidth/2-1,-mMapHeight/2-1));
-	return pos;
+	return Vector3(pos.x, pos.y, 0.0f);
 }
 
 Tile* Maze::GetStartTile()

@@ -25,8 +25,9 @@ void SpriteComponent::Draw(Shader* shader)
 	if (mTexture && mVisible)
 	{
 		// テクスチャサイズで再スケーリングしたワールド変換行列を作成
-		Matrix4 scaleMat = Matrix4::CreateScale(static_cast<float>(mTexWidth), static_cast<float>(mTexHeight), 1.0f);
+		Matrix4 scaleMat = Matrix4::CreateScale(static_cast<float>(mTexWidth));
 		Matrix4 world = scaleMat * mOwner->GetWorldTransform();
+		world *= Matrix4::CreateTranslation(Vector3(0.0f, 0.0f, -200.0f));
 		// ワールド変換
 		shader->SetMatrixUniform("uWorldTransform", world);
 		// 現在のテクスチャをセット

@@ -5,7 +5,7 @@
 
 Actor::Actor(Game* game)
 	:mState(EActive)
-	, mPosition(Vector2::Zero)
+	, mPosition(Vector3::Zero)
 	, mScale(1.0f)
 	, mRotation(0.0f)
 	, mRadius(0.0f)
@@ -96,7 +96,7 @@ void Actor::ComputeWorldTransform()
 		// スケーリング→回転→平行移動
 		mWorldTransform = Matrix4::CreateScale(mScale);
 		mWorldTransform *= Matrix4::CreateRotationZ(mRotation);
-		mWorldTransform *= Matrix4::CreateTranslation(Vector3(mPosition.x, mPosition.y, 0.0f));
+		mWorldTransform *= Matrix4::CreateTranslation(mPosition);
 		for (auto comp : mComponents)
 		{
 			comp->OnUpdateWorldTransform();

@@ -3,7 +3,7 @@
 
 MoveComponent::MoveComponent(Actor* owner, int updateOrder)
 	: Component(owner)
-	, mVelocity(Vector2::Zero)		// 並進移動速度
+	, mVelocity(Vector3::Zero)		// 並進移動速度
 	, mRotSpeed(0.0f)				// 回転速度
 {}
 

@@ -2,8 +2,8 @@
 class VertexInfo
 {
 public:
-	VertexInfo(unsigned int numVerts, const float* vertPos, const float* texCoord,
-		const float* vertColor, const unsigned int* indices);
+	VertexInfo(const float* vertPos, const float* texCoord, const float* vertColor, const unsigned int* indices,
+		unsigned int numVerts, unsigned int numIndex);
 	~VertexInfo();
 
 	// このバーテックス配列をアクティブにする（描画できるようにする）

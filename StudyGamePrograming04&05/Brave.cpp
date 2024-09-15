@@ -54,28 +54,28 @@ void Brave::ActorInput(const SDL_Event& event){
 			if (event.key.keysym.sym == SDLK_DOWN)
 			{
 				if (bg != 0 || ed != 3) { asc->SetAnimNum(0, 3, true); }
-				mc->SetVelocity(speed * Vector2(0.0f, -1.0f));
+				mc->SetVelocity(speed * Vector3(0.0f, -1.0f, 0.0f));
 			}
 			else if (event.key.keysym.sym == SDLK_UP)
 			{
 				if (bg != 4 || ed != 7) { asc->SetAnimNum(4, 7, true); }
-				mc->SetVelocity(speed * Vector2(0.0f, 1.0f));
+				mc->SetVelocity(speed * Vector3(0.0f, 1.0f, 0.0f));
 			}
 			else if (event.key.keysym.sym == SDLK_RIGHT)
 			{
 				if (bg != 8 || ed != 11) { asc->SetAnimNum(8, 11, true); }
-				mc->SetVelocity(speed * Vector2(1.0f, 0.0f));
+				mc->SetVelocity(speed * Vector3(1.0f, 0.0f, 0.0f));
 			}
 			else if (event.key.keysym.sym == SDLK_LEFT)
 			{
 				if (bg != 12 || ed != 15) { asc->SetAnimNum(12, 15, true); }
-				mc->SetVelocity(speed * Vector2(-1.0f, 0.0f));
+				mc->SetVelocity(speed * Vector3(-1.0f, 0.0f, 0.0f));
 			}
 		}		
 		else
 		{
 			// ‰½‚à‘€ì‚µ‚Ä‚¢‚È‚¢‚Æ‚«
-			mc->SetVelocity(Vector2::Zero);
+			mc->SetVelocity(Vector3::Zero);
 		}
 	}	
 }
@@ -95,7 +95,7 @@ void Brave::UpdateActor(float deltaTime){
 					//•Ç‚ÉÕ“Ë‚µ‚Ä‚¢‚½‚ç—£‚·B
 					if (Intersect(*cc, *tile->GetCircle())) {
 						//‚Q‚Â‚Ì’†S‚ğŒ‹‚Ôü•ªã‚ÅA‚Q‚Â‚Ì”¼Œa‚¾‚¯—£‚·
-						Vector2 diff = Vector2::Normalize(this->GetPosition() - tile->GetPosition());
+						Vector3 diff = Vector3::Normalize(this->GetPosition() - tile->GetPosition());
 						this->SetPosition(tile->GetPosition() + diff * (this->GetRadius() + tile->GetRadius()));
 					}
 				}
