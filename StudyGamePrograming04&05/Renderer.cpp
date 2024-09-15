@@ -109,12 +109,15 @@ void Renderer::Draw()
 		GL_ONE_MINUS_SRC_ALPHA		// dstFactorは(1-srcAlpha)
 	);
 	//深度有効化
-	//glEnable(GL_DEPTH_TEST);
+	glEnable(GL_DEPTH_TEST);
 	//glDepthMask(true);
 
 	// シェーダーとバーテックス配列オブジェクトを有効化
 	mVertexInfo->SetActive();
 	mShader->SetActive();
+
+	mShader->SetMatrixUniform("uViewProj", mView * mProjection);
+
 	for (auto sprite : mSprites)
 	{
 		if (sprite->GetVisible())
@@ -176,38 +179,25 @@ void Renderer::CreateVertexInfo()
 {
 	//頂点座標(vector3)
 	float vertPos[] = {
-		-0.5f, -0.5f,  0.5f,	//top left lower
-		 0.5f, -0.5f,  0.5f,	//top right lower
-		-0.5f,  0.5f,  0.5f,	//top left upper
-		 0.5f,  0.5f,  0.5f,	//top rght upper
-		 /*
-		-0.5f, -0.5f, -0.5f,	//front left lower
-		 0.5f, -0.5f, -0.5f,	//front right lower
-		-0.5f, -0.5f,  0.5f,	//front left upper
-		 0.5f, -0.5f,  0.5f,	//front right upper
-		 0.5f, -0.5f, -0.5f,	//right left lower
-		 0.5f,  0.5f, -0.5f,	//right right lower
-		 0.5f, -0.5f,  0.5f,	//right left upper
-		 0.5f,  0.5f,  0.5f,	//right right upper
-		-0.5f,  0.5f, -0.5f,	//left left lower
-		-0.5f, -0.5f, -0.5f,	//left right lower
-		-0.5f,  0.5f,  0.5f,	//left left upper
-		-0.5f, -0.5f,  0.5f,	//left right upper
-		 0.5f,  0.5f, -0.5f,	//back left lower
-		-0.5f,  0.5f, -0.5f,	//back right lower
-		 0.5f,  0.5f,  0.5f,	//back left upper
-		-0.5f,  0.5f,  0.5f		//back right upper
-		*/
+		-0.5f, -0.5f,  0.5f,	//front left lower
+		 0.5f, -0.5f,  0.5f,	//front right lower
+		-0.5f, -0.5f, -0.5f,	//front left upper
+		 0.5f, -0.5f, -0.5f,	//front right upper
+		 0.5f, -0.5f,  0.5f,	//right left lower
+		 0.5f,  0.5f,  0.5f,	//right right lower
+		 0.5f, -0.5f, -0.5f,	//right left upper
+		 0.5f,  0.5f, -0.5f,	//right right upper
+		-0.5f,  0.5f,  0.5f,	//left left lower
+		-0.5f, -0.5f,  0.5f,	//left right lower
+		-0.5f,  0.5f, -0.5f,	//left left upper
+		-0.5f, -0.5f, -0.5f,	//left right upper
+		 0.5f,  0.5f,  0.5f,	//back left lower
+		-0.5f,  0.5f,  0.5f,	//back right lower
+		 0.5f,  0.5f, -0.5f,	//back left upper
+		-0.5f,  0.5f, -0.5f		//back right upper
 	};
 	//テクスチャ座標(vector2)
 	float texCoord[] = {
-		 0.0f, 1.0f,
-		 1.0f, 1.0f,
-		 0.0f, 0.0f,
-		 1.0f, 0.0f,
-		 /*
-		 0.0f, 1.0f,
-		 1.0f, 1.0f,
 		 0.0f, 0.0f,
 		 1.0f, 0.0f,
 		 0.0f, 1.0f,
@@ -221,16 +211,12 @@ void Renderer::CreateVertexInfo()
 		 0.0f, 1.0f,
 		 1.0f, 1.0f,
 		 0.0f, 0.0f,
-		 1.0f, 0.0f
-		 */
+		 1.0f, 0.0f,
+		 0.0f, 1.0f,
+		 1.0f, 1.0f
 	};
 	//頂点カラー(vector4 RGBA)
 	float vertColor[] = {
-		 1.0f, 0.0f, 0.0f, 1.0f,
-		 0.0f, 1.0f, 0.0f, 1.0f,
-		 0.0f, 0.0f, 1.0f, 1.0f,
-		 1.0f, 1.0f, 1.0f, 1.0f,
-		 /*
 		 1.0f, 0.0f, 0.0f, 1.0f,
 		 0.0f, 1.0f, 0.0f, 1.0f,
 		 0.0f, 0.0f, 1.0f, 1.0f,
@@ -247,26 +233,21 @@ void Renderer::CreateVertexInfo()
 		 0.0f, 1.0f, 0.0f, 1.0f,
 		 0.0f, 0.0f, 1.0f, 1.0f,
 		 1.0f, 1.0f, 1.0f, 1.0f
-		 */
 	};
 
 	//インデックス
 	unsigned int indices[] = {
 		 0, 1, 2,
 		 2, 1, 3,
-		 /*
 		 4, 5, 6,
 		 6, 5, 7,
 		 8, 9, 10,
 		 10, 9, 11,
 		 12, 13, 14,
 		 14, 13, 15,
-		 16, 17, 18,
-		 18, 17, 19
-		 */
 	};
 
-	mVertexInfo = new VertexInfo(vertPos, texCoord, vertColor, indices, 4, 6);
+	mVertexInfo = new VertexInfo(vertPos, texCoord, vertColor, indices, 16, 24);
 }
 
 bool Renderer::LoadShaders()
@@ -278,20 +259,11 @@ bool Renderer::LoadShaders()
 		return false;
 	}
 	mShader->SetActive();
-	// ビュー変換行列を作成。
-	
-	// 平行投影の場合
-	//Matrix4 viewProj = Matrix4::CreateSimpleViewProj(mScreenWidth, mScreenHeight);
-	Matrix4 viewProj = Matrix4::CreateTranslation(Vector3(0.0f, 0.0f, 2000.0f)) * Matrix4::CreateOrtho(mScreenWidth, mScreenHeight, 0.1f, 3000.0f);
-	/*
-	// 透視投影の場合
-	float cameraDistance = 1000;
-	Vector3 eye = Vector3(0.0f, 0.0f,-500.0f);
-	Vector3 target = Vector3::Zero;
-	Vector3 up = Vector3::UnitY;
-	Matrix4 viewProj = Matrix4::CreateLookAt(eye, target, up);
-	viewProj *= Matrix4::CreatePerspectiveFOV(Math::Pi / 4, mScreenWidth , mScreenHeight, 0.01f, 3000.0f);
-	*/
-	mShader->SetMatrixUniform("uViewProj", viewProj);
+	// ビュー射影変換行列を作成。
+	// Set the view-projection matrix
+	mView = Matrix4::CreateLookAt(Vector3::Zero, Vector3::UnitX, Vector3::UnitZ);
+	mProjection = Matrix4::CreatePerspectiveFOV(Math::Pi*0.5,	mScreenWidth, mScreenHeight, 0.01f, 5000.0f);
+	mShader->SetMatrixUniform("uViewProj", mView * mProjection);
+
 	return true;
 }

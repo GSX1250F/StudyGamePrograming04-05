@@ -72,7 +72,7 @@ void Maze::UpdateActor(float deltaTime){
 	if (resetStart == true)
 	{
 		mBrave->SetState(EPaused);
-		mBrave->GetSprite()->SetVisible(false);
+		//mBrave->GetSprite()->SetVisible(false);
 		//mShadow->SetState(EPaused);
 		//mShadow->GetSprite()->SetVisible(false);
 		mTreasure->SetState(EPaused);
@@ -107,7 +107,7 @@ void Maze::UpdateActor(float deltaTime){
 	else if (resetEnd == true)
 	{
 		mBrave->SetState(EActive);
-		mBrave->GetSprite()->SetVisible(true);
+		//mBrave->GetSprite()->SetVisible(true);
 		mBrave->SetPosition(GetTilePos(starti, startj));
 		//mShadow->SetState(EActive);
 		//mShadow->GetSprite()->SetVisible(true);
@@ -117,8 +117,11 @@ void Maze::UpdateActor(float deltaTime){
 		mTreasure->SetPosition(GetTilePos(goali, goalj));
 		for (auto ctiles : mTiles) {
 			for (auto tile : ctiles) {
-				tile->SetState(EActive);
-				tile->GetSprite()->SetVisible(true);
+				if (tile->GetTileState() == Tile::EWall)
+				{	
+					tile->SetState(EActive);
+					tile->GetSprite()->SetVisible(true);
+				}				
 			}
 		}
 		/*

@@ -6,6 +6,16 @@
 #include "Math.h"
 #include "Texture.h"
 
+struct DirectionalLight
+{
+	// Direction of light
+	Vector3 mDirection;
+	// Diffuse color
+	Vector3 mDiffuseColor;
+	// Specular color
+	Vector3 mSpecColor;
+};
+
 class Renderer
 {
 public:
@@ -21,15 +31,18 @@ public:
 	void AddSprite(class SpriteComponent* sprite);
 	void RemoveSprite(class SpriteComponent* sprite);
 
-	//SDL_Texture* GetTexture(const std::string& fileName);
 	class Texture* GetTexture(const std::string& fileName);
+
+	void SetViewMatrix(const Matrix4& view) { mView = view; }
 
 	float GetScreenWidth() const { return mScreenWidth; }
 	float GetScreenHeight() const { return mScreenHeight; }
 
 private:
+	void CreateVertexInfo();
+	bool LoadShaders();
+
 	// テクスチャのマップ
-	//std::unordered_map<std::string, SDL_Texture*> mTextures;
 	std::unordered_map<std::string, class Texture*> mTextures;
 
 	// スプライトコンポーネントの配列
@@ -37,21 +50,22 @@ private:
 
 	// Game
 	class Game* mGame;
-
-	// Width/height of screen
-	float mScreenWidth;
-	float mScreenHeight;
-
+	
 	// SDL_Window
 	SDL_Window* mWindow;
 	// SDL Renderer
 	SDL_Renderer* mRenderer;
 	// OpenGL context
 	SDL_GLContext mContext;
-	void CreateVertexInfo();
-	bool LoadShaders();
 	// バーテックス配列オブジェクト
 	class VertexInfo* mVertexInfo;
 	// シェーダー
 	class Shader* mShader;
+	// View/projection for 3D shaders
+	Matrix4 mView;
+	Matrix4 mProjection;
+
+	// Width/height of screen
+	float mScreenWidth;
+	float mScreenHeight;
 };
