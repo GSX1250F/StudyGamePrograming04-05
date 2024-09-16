@@ -8,7 +8,7 @@ public:
 	CircleComponent(class Actor* owner);
 
 	float GetRadius() const;
-	const Vector2& GetCenter() const;
+	const Vector3& GetCenter() const;
 
 };
 

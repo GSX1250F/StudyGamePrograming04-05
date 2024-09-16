@@ -1,9 +1,8 @@
 #include "VertexInfo.h"
 #include <glew.h>
 
-VertexInfo::VertexInfo(unsigned int numVerts, const float* vertPos, 
-					   const float* texCoord, const float* vertColor, 
-					   const unsigned int* indices)
+VertexInfo::VertexInfo(const float* vertPos, const float* texCoord, const float* vertColor, const unsigned int* indices,
+	unsigned int numVerts, unsigned int numIndex)
 	: mNumVerts(numVerts)
 {
 	// バーテックス配列オブジェクトをOpenGLに生成し、そのIDをメンバー変数mVertexArrayに保存する
@@ -11,43 +10,40 @@ VertexInfo::VertexInfo(unsigned int numVerts, const float* vertPos,
 	glBindVertexArray(mVertexArray);
 
 	// インデックスバッファをOpenGLに生成し、そのIDをメンバー変数mIndexBufferに保存する
-	int cnt = 6;	//インデックスバッファの要素数
 	glGenBuffers(1, &mIndexBuffer);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mIndexBuffer);
 	glBufferData(
 		GL_ELEMENT_ARRAY_BUFFER,			//インデックスバッファの指定
-		cnt * sizeof(unsigned int),	//データのサイズ
+		numIndex * sizeof(unsigned int),	//データのサイズ
 		indices,							//コピー元の配列
 		GL_STATIC_DRAW						//このデータを1回だけロードしてその後頻繁に使うとき
 	);
 
 	//VertexAttribute layout0 = position
-	cnt = 2 * numVerts;		//頂点座標配列の要素数
 	glGenBuffers(1, &mVertPosBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, mVertPosBuffer);
 	glBufferData(
 		GL_ARRAY_BUFFER,					// バッファの種類にバーテックスバッファを指定
-		cnt * sizeof(float),	//コピーするバイト数
+		numVerts * 3 * sizeof(float),	//コピーするバイト数
 		vertPos,							//コピー元の配列
 		GL_STATIC_DRAW						//このデータを1回だけロードしてその後頻繁に使うとき
 	);
 	glVertexAttribPointer(
 		0,						// 属性インデックス（１つ目はゼロ）
-		2,						// 要素数
+		3,						// 要素数
 		GL_FLOAT,				// 要素の型
 		GL_FALSE,				// 整数型のみ使用する。
-		cnt / numVerts * sizeof(float),		// ストライド（通常は各バーテックス属性のデータ数
+		3 * sizeof(float),		// ストライド（通常は各バーテックス属性のデータ数
 		0						// 頂点データの開始位置からこの属性までのオフセット
 	);
 	glEnableVertexAttribArray(0);
 
 	// VertexAttribute layout1 = texCoord
-	cnt = 2 * numVerts;		//テクスチャ座標配列の要素数
 	glGenBuffers(1, &mTexCoordBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, mTexCoordBuffer);
 	glBufferData(
 		GL_ARRAY_BUFFER,					// バッファの種類にバーテックスバッファを指定
-		cnt * sizeof(float),	//コピーするバイト数
+		numVerts * 2 * sizeof(float),	//コピーするバイト数
 		texCoord,							//コピー元の配列
 		GL_STATIC_DRAW						//このデータを1回だけロードしてその後頻繁に使うとき
 	);
@@ -56,18 +52,17 @@ VertexInfo::VertexInfo(unsigned int numVerts, const float* vertPos,
 		2,						// 要素数
 		GL_FLOAT,				// 要素の型
 		GL_FALSE,				// 整数型のみ使用する。
-		cnt / numVerts * sizeof(float),		// ストライド（通常は各バーテックス属性のデータ数
+		2 * sizeof(float),		// ストライド（通常は各バーテックス属性のデータ数
 		0						// 頂点データの開始位置からこの属性までのオフセット
 	);
 	glEnableVertexAttribArray(1);
 
 	// VertexAttribute layout2 = vertColor
-	cnt = 4 * numVerts;		//頂点カラー配列の要素数
 	glGenBuffers(1, &mVertColorBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, mVertColorBuffer);
 	glBufferData(
 		GL_ARRAY_BUFFER,					// バッファの種類にバーテックスバッファを指定
-		cnt * sizeof(float),	//コピーするバイト数
+		numVerts * 4 * sizeof(float),	//コピーするバイト数
 		vertColor,							//コピー元の配列
 		GL_STATIC_DRAW						//このデータを1回だけロードしてその後頻繁に使うとき
 	);
@@ -76,7 +71,7 @@ VertexInfo::VertexInfo(unsigned int numVerts, const float* vertPos,
 		4,						// 要素数
 		GL_FLOAT,				// 要素の型
 		GL_FALSE,				// 整数型のみ使用する。
-		cnt / numVerts * sizeof(float),		// ストライド（通常は各バーテックス属性のデータ数
+		4 * sizeof(float),		// ストライド（通常は各バーテックス属性のデータ数
 		0						// 頂点データの開始位置からこの属性までのオフセット
 	);
 	glEnableVertexAttribArray(2);

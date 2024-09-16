@@ -4,10 +4,10 @@
 
 MoveComponent::MoveComponent(Actor* owner, int updateOrder) 
 	: Component(owner) 
-	,mVelocity(Vector2::Zero)		// 並進移動速度
+	,mVelocity(Vector3::Zero)		// 並進移動速度
 	,mRotSpeed(0.0f)				// 回転速度
 	,mMass(1.0f)					// 質量
-	,mMoveForce(Vector2::Zero)		// 重心にかかる力
+	,mMoveForce(Vector3::Zero)		// 重心にかかる力
 	,mRotForce(0.0f)				// 回転方向の力F +方向はCCW
 	,mMoveResist(0.0f)				// 重心速度抵抗率(%)
 	,mRotResist(0.0f)				// 回転速度抵抗率(%)
@@ -29,17 +29,17 @@ void MoveComponent::Update(float deltatime)
 	SetRotSpeed(mRotSpeed + GetRotAccel() * deltatime);		//ω = ωo + bt
 }
 
-Vector2 MoveComponent::GetMoveAccel() const
+Vector3 MoveComponent::GetMoveAccel() const
 {
 	if (!Math::NearZero(mMass))
 	{
-		Vector2 accel = mMoveForce * (1 / mMass);    //重心加速度の計算　F=ma  a=F*(1/m)
+		Vector3 accel = mMoveForce * (1 / mMass);    //重心加速度の計算　F=ma  a=F*(1/m)
 		accel -= mVelocity * mMoveResist * 0.01f * (1 / mMass);
 		return accel;
 	}
 	else
 	{
-		return Vector2::Zero;
+		return Vector3::Zero;
 	}
 }
 

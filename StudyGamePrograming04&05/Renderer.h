@@ -6,16 +6,6 @@
 #include "Math.h"
 #include "Texture.h"
 
-struct DirectionalLight
-{
-	// Direction of light
-	Vector3 mDirection;
-	// Diffuse color
-	Vector3 mDiffuseColor;
-	// Specular color
-	Vector3 mSpecColor;
-};
-
 class Renderer
 {
 public:

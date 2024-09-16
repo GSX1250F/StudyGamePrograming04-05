@@ -23,7 +23,6 @@ public:
 
 	std::vector<std::vector<class Tile*>> GetTiles() { return mTiles; }
 	class Treasure* GetTreasure() { return mTreasure; }
-	void SetClearPictPos(Vector3 pos);
 
 private:
 	// ゲームスタート

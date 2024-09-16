@@ -4,39 +4,19 @@
 #include "Maze.h"
 #include "Tile.h"
 #include "Treasure.h"
-#include "AnimSpriteComponent.h"
+#include "SpriteComponent.h"
 #include "CircleComponent.h"
 #include "MoveComponent.h"
 
 Brave::Brave(Game* game)
 	: Actor(game)
-	, speed(1000.0f)
-{
-	SetRadius(130.0f);
-	/*
-	// アニメーションのスプライトコンポーネントを作成
-	asc = new AnimSpriteComponent(this, 45);
-	std::vector<Texture*> anims = {
-		game->GetRenderer()->GetTexture("Assets/Brave01.png"),
-		game->GetRenderer()->GetTexture("Assets/Brave02.png"),
-		game->GetRenderer()->GetTexture("Assets/Brave03.png"),
-		game->GetRenderer()->GetTexture("Assets/Brave04.png"),
-		game->GetRenderer()->GetTexture("Assets/Brave05.png"),
-		game->GetRenderer()->GetTexture("Assets/Brave06.png"),
-		game->GetRenderer()->GetTexture("Assets/Brave07.png"),
-		game->GetRenderer()->GetTexture("Assets/Brave08.png"),
-		game->GetRenderer()->GetTexture("Assets/Brave09.png"),
-		game->GetRenderer()->GetTexture("Assets/Brave10.png"),
-		game->GetRenderer()->GetTexture("Assets/Brave11.png"),
-		game->GetRenderer()->GetTexture("Assets/Brave12.png"),
-		game->GetRenderer()->GetTexture("Assets/Brave13.png"),
-		game->GetRenderer()->GetTexture("Assets/Brave14.png"),
-		game->GetRenderer()->GetTexture("Assets/Brave15.png"),
-		game->GetRenderer()->GetTexture("Assets/Brave16.png")
-	};
-	asc->SetAnimTextures(anims);
-	asc->SetAnimNum(0, 3, true);
-	*/
+	, speed(1000.0f)	
+{	
+	SetScale(0.85f);
+	//スプライトコンポーネント作成、テクスチャ設定
+	sc = new SpriteComponent(this, 100);
+	sc->SetTexture(game->GetRenderer()->GetTexture("Assets/ClearPict.png"));
+	sc->SetVisible(false);	
 
 	//CircleComponent作成
 	cc = new CircleComponent(this);
@@ -79,10 +59,10 @@ void Brave::ActorInput(const SDL_Event& event){
 
 void Brave::UpdateActor(float deltaTime){
 	if (GetGame()->GetMaze()->GetGameStart()) {
-		GetGame()->GetMaze()->SetClearPictPos(GetPosition());
 		if (Intersect(*cc, *GetGame()->GetMaze()->GetTreasure()->GetCircle())) {
 			// ゴール
 			GetGame()->GetMaze()->SetGameClear(true);
+			sc->SetVisible(true);
 		}
 
 		for (auto tilecol : GetGame()->GetMaze()->GetTiles())

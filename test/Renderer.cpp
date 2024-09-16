@@ -55,15 +55,7 @@ bool Renderer::Initialize(float screenWidth, float screenHeight)
 		SDL_Log("ウィンドウの作成に失敗しました: %s", SDL_GetError());
 		return false;
 	}
-	/*
-	// SDLレンダラーを作成
-	mRenderer = SDL_CreateRenderer(mWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-	if (!mRenderer)
-	{
-		SDL_Log("レンダラーの作成に失敗しました: %s", SDL_GetError());
-		return false;
-	}
-	*/
+
 	// OpenGLコンテクストを生成（すべてのOpenGL機能にアクセスする）
 	mContext = SDL_GL_CreateContext(mWindow);
 
@@ -109,17 +101,19 @@ void Renderer::Draw()
 {
 	// 背景色を指定して画面をクリア
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	// カラーバッファのアルファブレンディングを有効化
 	glEnable(GL_BLEND);
 	glBlendFunc(
 		GL_SRC_ALPHA,				// srcFactorはsrcAlpha
 		GL_ONE_MINUS_SRC_ALPHA		// dstFactorは(1-srcAlpha)
 	);
+	glEnable(GL_DEPTH_TEST);
 
 	// シェーダーとバーテックス配列オブジェクトを有効化
 	mVertexInfo->SetActive();
 	mShader->SetActive();
+	mShader->SetMatrixUniform("uViewProj", mView * mProjection);
 	for (auto sprite : mSprites)
 	{
 		if (sprite->GetVisible())
@@ -179,36 +173,77 @@ class Texture* Renderer::GetTexture(const std::string& filename)
 
 void Renderer::CreateVertexInfo()
 {
-	int numVerts = 4;		//頂点の数
-	//頂点座標(vector2)
+	//頂点座標(vector3)
 	float vertPos[] = {
-		-0.5f, 0.5f, 			// 左上 (インデックス 0) 
-		-0.5f, -0.5f, 			// 左下 (インデックス 1)
-		0.5f, -0.5f, 			// 右下 (インデックス 2)
-		0.5f, 0.5f, 			// 右上 (インデックス 3)
+		-0.5f, -0.5f,  0.5f,	//front left lower
+		 0.5f, -0.5f,  0.5f,	//front right lower
+		-0.5f, -0.5f, -0.5f,	//front left upper
+		 0.5f, -0.5f, -0.5f,	//front right upper
+		 0.5f, -0.5f,  0.5f,	//right left lower
+		 0.5f,  0.5f,  0.5f,	//right right lower
+		 0.5f, -0.5f, -0.5f,	//right left upper
+		 0.5f,  0.5f, -0.5f,	//right right upper
+		-0.5f,  0.5f,  0.5f,	//left left lower
+		-0.5f, -0.5f,  0.5f,	//left right lower
+		-0.5f,  0.5f, -0.5f,	//left left upper
+		-0.5f, -0.5f, -0.5f,	//left right upper
+		 0.5f,  0.5f,  0.5f,	//back left lower
+		-0.5f,  0.5f,  0.5f,	//back right lower
+		 0.5f,  0.5f, -0.5f,	//back left upper
+		-0.5f,  0.5f, -0.5f		//back right upper
 	};
 	//テクスチャ座標(vector2)
 	float texCoord[] = {
-		0.0f, 0.0f,			//テクスチャ座標左下
-		0.0f, 1.0f,			//テクスチャ座標左上
-		1.0f, 1.0f,			//テクスチャ座標右上
-		1.0f, 0.0f			//テクスチャ座標右下
+		 0.0f, 0.0f,
+		 1.0f, 0.0f,
+		 0.0f, 1.0f,
+		 1.0f, 1.0f,
+		 0.0f, 0.0f,
+		 1.0f, 0.0f,
+		 0.0f, 1.0f,
+		 1.0f, 1.0f,
+		 0.0f, 0.0f,
+		 1.0f, 0.0f,
+		 0.0f, 1.0f,
+		 1.0f, 1.0f,
+		 0.0f, 0.0f,
+		 1.0f, 0.0f,
+		 0.0f, 1.0f,
+		 1.0f, 1.0f
 	};
 	//頂点カラー(vector4 RGBA)
 	float vertColor[] = {
-		1.0f, 0.0f, 0.0f, 1.0f,		//R
-		0.0f, 1.0f, 0.0f, 1.0f,		//G
-		0.0f, 0.0f, 1.0f, 1.0f,		//B
-		1.0f, 1.0f, 1.0f, 1.0f		//W
+		 1.0f, 0.0f, 0.0f, 1.0f,
+		 0.0f, 1.0f, 0.0f, 1.0f,
+		 0.0f, 0.0f, 1.0f, 1.0f,
+		 1.0f, 1.0f, 1.0f, 1.0f,
+		 1.0f, 0.0f, 0.0f, 1.0f,
+		 0.0f, 1.0f, 0.0f, 1.0f,
+		 0.0f, 0.0f, 1.0f, 1.0f,
+		 1.0f, 1.0f, 1.0f, 1.0f,
+		 1.0f, 0.0f, 0.0f, 1.0f,
+		 0.0f, 1.0f, 0.0f, 1.0f,
+		 0.0f, 0.0f, 1.0f, 1.0f,
+		 1.0f, 1.0f, 1.0f, 1.0f,
+		 1.0f, 0.0f, 0.0f, 1.0f,
+		 0.0f, 1.0f, 0.0f, 1.0f,
+		 0.0f, 0.0f, 1.0f, 1.0f,
+		 1.0f, 1.0f, 1.0f, 1.0f
 	};
 
 	//インデックス
 	unsigned int indices[] = {
-		0, 1, 2,
-		2, 3, 0
+		 0, 1, 2,
+		 2, 1, 3,
+		 4, 5, 6,
+		 6, 5, 7,
+		 8, 9, 10,
+		 10, 9, 11,
+		 12, 13, 14,
+		 14, 13, 15,
 	};
 
-	mVertexInfo = new VertexInfo(numVerts, vertPos, texCoord, vertColor, indices);
+	mVertexInfo = new VertexInfo(vertPos, texCoord, vertColor, indices, 16, 24);
 }
 
 bool Renderer::LoadShaders()
@@ -220,8 +255,8 @@ bool Renderer::LoadShaders()
 		return false;
 	}
 	mShader->SetActive();
-	// ビュー変換行列を作成。ここでは平行投影変換を行う。
-	Matrix4 viewProj = Matrix4::CreateSimpleViewProj(mScreenWidth, mScreenHeight);
-	mShader->SetMatrixUniform("uViewProj", viewProj);
+	mView = Matrix4::CreateLookAt(Vector3::Zero, Vector3::UnitX, Vector3::UnitZ);
+	mProjection = Matrix4::CreatePerspectiveFOV(Math::Pi * 0.5, mScreenWidth, mScreenHeight, 0.01f, 5000.0f);
+	mShader->SetMatrixUniform("uViewProj", mView * mProjection);
 	return true;
 }

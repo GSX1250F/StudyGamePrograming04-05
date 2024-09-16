@@ -66,19 +66,19 @@ void Maze::ActorInput(const SDL_Event& event)
 void Maze::UpdateActor(float deltaTime){
 	if (gameClear == true) 
 	{
-		mClearPict->SetState(EActive);
-		mClearPict->GetSprite()->SetVisible(true);
+		//mClearPict->SetState(EActive);
+		//mClearPict->GetSprite()->SetVisible(true);
 	}
 	if (resetStart == true)
 	{
 		mBrave->SetState(EPaused);
-		//mBrave->GetSprite()->SetVisible(false);
+		mBrave->GetSprite()->SetVisible(false);
 		//mShadow->SetState(EPaused);
 		//mShadow->GetSprite()->SetVisible(false);
 		mTreasure->SetState(EPaused);
 		mTreasure->GetSprite()->SetVisible(false);
-		mClearPict->SetState(EPaused);
-		mClearPict->GetSprite()->SetVisible(false);
+		//mClearPict->SetState(EPaused);
+		//mClearPict->GetSprite()->SetVisible(false);
 		for (int i = 0; i < mTiles.size(); i++)
 		{
 			mTiles[i].resize(mMapHeight);
@@ -124,14 +124,14 @@ void Maze::UpdateActor(float deltaTime){
 				}				
 			}
 		}
-		/*
+		
 		//—×Úƒm[ƒhì¬
 		MakeGraphNodes(mTiles);
 		// “¹‡’Tõ (‹t‡)
 		if (FindPath(GetGoalTile(), GetStartTile())) {
-			mShadow->GetNav()->SetStartNode(GetStartTile());
+			//mShadow->GetNav()->SetStartNode(GetStartTile());
 		}
-		*/
+		
 		resetEnd = false;
 		gameStart = true;
 	}
@@ -195,11 +195,6 @@ Tile* Maze::GetStartTile()
 Tile* Maze::GetGoalTile()
 {
 	return mTiles[goali][goalj];
-}
-
-void Maze::SetClearPictPos(Vector3 pos)
-{
-	mClearPict->SetPosition(pos);
 }
 
 void Maze::MakeGraphNodes(std::vector<std::vector<class Tile*>> &tiles)

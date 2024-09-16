@@ -7,13 +7,13 @@ public:
 	void UpdateActor(float deltaTime) override;
 	void ActorInput(const SDL_Event& event) override;
 
-	class AnimSpriteComponent* GetSprite() { return asc; }
+	class SpriteComponent* GetSprite() { return sc; }
 	class CircleComponent* GetCircle() { return cc; }
 	float GetSpeed() { return speed; }
 
 
 private:
-	class AnimSpriteComponent* asc;
+	class SpriteComponent* sc;
 	class CircleComponent* cc;
 	class MoveComponent* mc;
 

@@ -17,9 +17,9 @@ public:
 	virtual ~Actor();
 
 	// ゲームから呼び出されるProcess Input(オーバーライド不可)
-	void ProcessInput(const uint8_t* keyState);
+	void ProcessInput(const SDL_Event& event);
 	// アクター独自の入力処理(オーバーライド可能)
-	virtual void ActorInput(const uint8_t* keyState);
+	virtual void ActorInput(const SDL_Event& event);
 
 	// ゲームから呼び出される更新関数(オーバーライド不可)
 	void Update(float deltaTime);
