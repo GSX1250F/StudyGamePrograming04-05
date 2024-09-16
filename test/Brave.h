@@ -5,7 +5,7 @@ class Brave : public Actor
 public:
 	Brave(Game* game);
 	void UpdateActor(float deltaTime) override;
-	void ActorInput(const SDL_Event& event) override;
+	void ActorInput(const uint8_t* keyState) override;
 
 	class AnimSpriteComponent* GetSprite() { return asc; }
 	class CircleComponent* GetCircle() { return cc; }

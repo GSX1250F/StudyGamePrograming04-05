@@ -47,70 +47,33 @@ Brave::Brave(Game* game)
 
 void Brave::ActorInput(const SDL_Event& event){
 	if (GetGame()->GetMaze()->GetGameStart()) {
-		/*
-		//入力に応じて、アニメーションの設定と移動
-		//int bg = asc->GetAnimNumBeg();
-		//int ed = asc->GetAnimNumLast();
-
-		if (event.type == SDL_KEYDOWN) {
-			// キーが押されたとき
-			if (event.key.keysym.sym == SDLK_DOWN)
-			{
-				//if (bg != 0 || ed != 3) { asc->SetAnimNum(0, 3, true); }
-				mc->SetVelocity(speed * Vector3(0.0f, -1.0f, 0.0f));
-			}
-			else if (event.key.keysym.sym == SDLK_UP)
-			{
-				//if (bg != 4 || ed != 7) { asc->SetAnimNum(4, 7, true); }
-				mc->SetVelocity(speed * Vector3(0.0f, 1.0f, 0.0f));
-			}
-			else if (event.key.keysym.sym == SDLK_RIGHT)
-			{
-				//if (bg != 8 || ed != 11) { asc->SetAnimNum(8, 11, true); }
-				mc->SetVelocity(speed * Vector3(1.0f, 0.0f, 0.0f));
-			}
-			else if (event.key.keysym.sym == SDLK_LEFT)
-			{
-				//if (bg != 12 || ed != 15) { asc->SetAnimNum(12, 15, true); }
-				mc->SetVelocity(speed * Vector3(-1.0f, 0.0f, 0.0f));
-			}
-		}		
-		else
-		{
-			// 何も操作していないとき
-			mc->SetVelocity(Vector3::Zero);
-		}
-		*/
-		
 		float forwardSpeed = 0.0f;
 		float angularSpeed = 0.0f;
 		if (event.type == SDL_KEYDOWN) {
 			if (event.key.keysym.sym == SDLK_UP)
 			{
-				forwardSpeed += speed;
+				forwardSpeed = speed;
 			}
 			else if (event.key.keysym.sym == SDLK_DOWN)
 			{
-				forwardSpeed -= speed;
+				forwardSpeed = -speed;
 			}
 			else if (event.key.keysym.sym == SDLK_LEFT)
 			{
-				angularSpeed -= Math::Pi;
+				angularSpeed = -Math::Pi;
 			}
 			else if (event.key.keysym.sym == SDLK_RIGHT)
 			{
-				angularSpeed += Math::Pi;
+				angularSpeed = Math::Pi;
 			}
 		}
 		else
 		{
-			// 何も操作していないとき
 			forwardSpeed = 0.0f;
 			angularSpeed = 0.0f;
 		}
 		mc->SetVelocity(forwardSpeed * GetForward());
-		mc->SetRotSpeed(angularSpeed);
-		
+		mc->SetRotSpeed(angularSpeed);		
 	}	
 }
 

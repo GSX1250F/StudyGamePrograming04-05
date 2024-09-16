@@ -63,26 +63,26 @@ void Game::RunLoop()
 void Game::ProcessInput()
 {
 	SDL_Event event;
+	// キューにイベントがあれば繰り返す
 	while (SDL_PollEvent(&event))
 	{
 		if (event.type == SDL_QUIT)
 		{
 			mIsRunning = false;
 		}
-		if (event.type == SDL_KEYDOWN)
+		const Uint8* keyState = SDL_GetKeyboardState(NULL);
+		if (keyState[SDL_SCANCODE_ESCAPE])
 		{
-			if (event.key.keysym.sym == SDLK_ESCAPE)
-			{
-				mIsRunning = false;
-			}
+			mIsRunning = false;
 		}
 
 		mUpdatingActors = true;
 		for (auto actor : mActors)
 		{
-			actor->ProcessInput(event);
+			actor->ProcessInput(keyState);
 		}
 		mUpdatingActors = false;
+
 	}
 }
 
