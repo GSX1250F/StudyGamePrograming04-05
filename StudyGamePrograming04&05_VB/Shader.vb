@@ -9,9 +9,6 @@ Public Class Shader
     Implements IDisposable      '明示的にクラスを開放するために必要
     'public
     Public Sub New()
-        mShaderProgram = 0
-        mVertexShader = 0
-        mFragShader = 0
     End Sub
     Protected disposed = False     '開放処理が実施済みかのフラグ
     Public Overloads Sub Dispose() Implements IDisposable.Dispose
@@ -72,7 +69,7 @@ Public Class Shader
     Private Function CompileShader(ByRef fileName As String, ByVal shaderType As ShaderType, ByRef outShader As Integer)
         If System.IO.File.Exists(fileName) Then
             'すべてのテキストを1つの文字列に読み込む
-            Dim sstream = File.ReadAllText(fileName)
+            Dim sstream As String = File.ReadAllText(fileName)
 
             ' 指定されたタイプのシェーダーを作成
             outShader = GL.CreateShader(shaderType)

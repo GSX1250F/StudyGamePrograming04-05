@@ -1,4 +1,4 @@
-#version 330 core
+#version 330
 
 // “ü—Í•Ï”‚ÌéŒ¾
 layout (location = 0) in vec3 inVertPos;

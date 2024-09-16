@@ -212,7 +212,7 @@ Public Class Renderer
     Private Function LoadShaders() As Boolean
         ' シェーダーを生成
         mShader = New Shader()
-        If (mShader.Load("Shaders/shader.vert", "Shaders/shader.frag") <> True) Then
+        If (mShader.Load("Shaders/Shader.vert", "Shaders/Shader.frag") <> True) Then
             Return False
         End If
         Return True

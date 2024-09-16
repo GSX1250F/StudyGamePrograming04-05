@@ -30,7 +30,7 @@ Public Class VertexInfo
                       vertPos,
                       BufferUsageHint.StaticDraw)
         GL.VertexAttribPointer(0,
-                               2,
+                               3,
                                VertexAttribPointerType.Float,
                                False,
                                CInt(vertPos.Length / numVerts) * Marshal.SizeOf(Of Single),

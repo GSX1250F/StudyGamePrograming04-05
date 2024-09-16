@@ -25,17 +25,17 @@ Public Class Game
         mUpdatingActors = False
     End Sub
     Public Function Initialize() As Boolean
+        'ストップウォッチ開始
+        Ticks = New Stopwatch()
+        Ticks.Start()
+        mTicksCount = Ticks.ElapsedMilliseconds
+
         'レンダラー作成
         mRenderer = New Renderer(Me)
         If (mRenderer.Initialize(mWindowWidth, mWindowHeight)) = False Then
             mRenderer.Shutdown()
             Return False
         End If
-
-        'ストップウォッチ開始
-        Ticks = New Stopwatch()
-        Ticks.Start()
-        mTicksCount = Ticks.ElapsedMilliseconds
 
         LoadData()
 
