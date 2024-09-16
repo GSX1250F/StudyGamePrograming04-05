@@ -4,8 +4,10 @@ class ClearPict : public Actor
 {
 public:
     ClearPict(Game* game);
-    void UpdateActor(float deltaTime) override;
+
+    class SpriteComponent* GetSprite() { return sc; }
 
 private:
     class SpriteComponent* sc;
 };
+

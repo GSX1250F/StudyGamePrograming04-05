@@ -16,7 +16,7 @@ public:
 	// マップを（再）構成
 	void GenerateMap();
 
-	Vector2 GetTilePos(int i, int j);
+	Vector3 GetTilePos(int i, int j);
 
 	class Tile* GetStartTile();
 	class Tile* GetGoalTile();
