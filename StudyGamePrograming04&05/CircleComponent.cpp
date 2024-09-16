@@ -16,8 +16,11 @@ const Vector3& CircleComponent::GetCenter() const
 
 bool Intersect(const CircleComponent& a, const CircleComponent& b)
 {
+	Vector2 a_center = Vector2(a.GetCenter().x, a.GetCenter().y);
+	Vector2 b_center = Vector2(b.GetCenter().x, b.GetCenter().y);
+
 	// ‚Q‚Â‚ÌCircleComponent‚Ì’†SŠÔ‹——£‚Ì2æ‚ğŒvZ
-	float distSq = (a.GetCenter() - b.GetCenter()).LengthSq();
+	float distSq = (a_center - b_center).LengthSq();
 
 	// ‚Q‚Â‚ÌCircleComponent‚Ì”¼Œa‚Ì˜a‚Ì2æ‚ğŒvZ 
 	float sumRadiusSq = (a.GetRadius() + b.GetRadius()) * (a.GetRadius() + b.GetRadius());
