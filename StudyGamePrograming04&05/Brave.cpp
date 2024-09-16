@@ -10,10 +10,9 @@
 
 Brave::Brave(Game* game)
 	: Actor(game)
-	, speed(100.0f)
+	, speed(1000.0f)
 {
-	//SetScale(0.85f);
-	SetRadius(12.0f);
+	SetRadius(130.0f);
 	/*
 	// アニメーションのスプライトコンポーネントを作成
 	asc = new AnimSpriteComponent(this, 45);
