@@ -28,7 +28,7 @@ Brave::Brave(Game* game)
 
 void Brave::ActorInput(const SDL_Event& event){
 	if (GetGame()->GetMaze()->GetGameStart()) {
-	
+
 	}	
 }
 

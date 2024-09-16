@@ -2,13 +2,10 @@
 #include "MazeCreator.h"
 #include "Game.h"
 #include "Brave.h"
-#include "ClearPict.h"
-#include "Shadow.h"
 #include "Treasure.h"
 #include "Tile.h"
 #include "CircleComponent.h"
 #include "SpriteComponent.h"
-#include "AnimSpriteComponent.h"
 #include "SomeSpriteComponent.h"
 #include "NavComponent.h"
 #include <queue>
@@ -48,7 +45,7 @@ Maze::Maze(Game* game, int mapWidth, int mapHeight)
 	mBrave = new Brave(game);			//プレイヤー
 	//mShadow = new Shadow(game);			//AIプレイヤー
 	mTreasure = new Treasure(game);		//ゴール
-	mClearPict = new ClearPict(game);	//クリア画面
+	//mClearPict = new ClearPict(game);	//クリア画面
 }
 
 void Maze::ActorInput(const SDL_Event& event)

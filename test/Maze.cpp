@@ -103,8 +103,11 @@ void Maze::UpdateActor(float deltaTime){
 		mTreasure->SetPosition(GetTilePos(goali, goalj));
 		for (auto ctiles : mTiles) {
 			for (auto tile : ctiles) {
-				tile->SetState(EActive);
-				tile->GetSprite()->SetVisible(true);
+				if (tile->GetTileState() == Tile::EWall)
+				{
+					tile->SetState(EActive);
+					tile->GetSprite()->SetVisible(true);
+				}
 			}
 		}
 		
