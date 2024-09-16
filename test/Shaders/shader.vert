@@ -15,7 +15,7 @@ out vec4 fragVertColor;		//頂点カラー
 
 void main()
 {
-	vec4 pos = vec4(inVertPos, 0.0);
+	vec4 pos = vec4(inVertPos, 1.0);
 
 	// ワールド変換とビュー射影変換を実行。
 	gl_Position = pos * uWorldTransform * uViewProj;

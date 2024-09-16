@@ -3,7 +3,6 @@
 #include "Game.h"
 #include "Renderer.h"
 #include "CircleComponent.h"
-#include "SquareComponent.h"
 
 Tile::Tile(class Game* game)
 	:Actor(game)
@@ -21,9 +20,6 @@ Tile::Tile(class Game* game)
 	
 	//CircleComponentçÏê¨
 	cc = new CircleComponent(this);	
-
-	//SquareComponentçÏê¨
-	//sq = new SquareComponent(this);
 }
 
 void Tile::UpdateActor(float deltaTime)

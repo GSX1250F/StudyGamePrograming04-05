@@ -110,6 +110,7 @@ void Game::UpdateGame()
 	// 待ちになっていたアクターをmActorsに移動
 	for (auto pending : mPendingActors)
 	{
+		pending->ComputeWorldTransform();
 		mActors.emplace_back(pending);
 	}
 	mPendingActors.clear();

@@ -29,6 +29,9 @@ public:
 	float GetScreenHeight() const { return mScreenHeight; }
 
 private:
+	void CreateVertexInfo();
+	bool LoadShaders();
+
 	// テクスチャのマップ
 	std::unordered_map<std::string, class Texture*> mTextures;
 	
@@ -38,22 +41,22 @@ private:
 	// Game
 	class Game* mGame;
 
-	// Width/height of screen
-	float mScreenWidth;
-	float mScreenHeight;
-
 	// SDL_Window
 	SDL_Window* mWindow;
 	// SDL Renderer
 	SDL_Renderer* mRenderer;
 	// OpenGL context
 	SDL_GLContext mContext;
-	void CreateVertexInfo();
-	bool LoadShaders();
 	// バーテックス配列オブジェクト
 	class VertexInfo* mVertexInfo;
 	// シェーダー
 	class Shader* mShader;
+
 	Matrix4 mView;
 	Matrix4 mProjection;
+
+	// Width/height of screen
+	float mScreenWidth;
+	float mScreenHeight;
+
 };

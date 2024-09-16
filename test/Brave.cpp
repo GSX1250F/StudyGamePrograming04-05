@@ -28,8 +28,34 @@ Brave::Brave(Game* game)
 
 void Brave::ActorInput(const SDL_Event& event){
 	if (GetGame()->GetMaze()->GetGameStart()) {
-
-	}	
+		float forwardSpeed = 0.0f;
+		float angularSpeed = 0.0f;
+		if (event.type == SDL_KEYDOWN) {
+			if (event.key.keysym.sym == SDLK_UP)
+			{
+				forwardSpeed = speed;
+			}
+			else if (event.key.keysym.sym == SDLK_DOWN)
+			{
+				forwardSpeed = -speed;
+			}
+			else if (event.key.keysym.sym == SDLK_LEFT)
+			{
+				angularSpeed = -Math::Pi;
+			}
+			else if (event.key.keysym.sym == SDLK_RIGHT)
+			{
+				angularSpeed = Math::Pi;
+			}
+		}
+		else
+		{
+			forwardSpeed = 0.0f;
+			angularSpeed = 0.0f;
+		}
+		mc->SetVelocity(forwardSpeed * GetForward());
+		mc->SetRotSpeed(angularSpeed);
+	}
 }
 
 void Brave::UpdateActor(float deltaTime){
