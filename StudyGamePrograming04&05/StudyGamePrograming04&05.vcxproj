@@ -170,7 +170,7 @@ xcopy "..\..\external\GLEW\lib\$(PlatformTarget)\*.dll" "$(OutDir)" /i/s/y
       <AdditionalIncludeDirectories>..\..\external\SDL2\include;..\..\external\SOIL\include;..\..\external\GLEW\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\..\external\SDL2\lib\$(PlatformTarget);..\..\external\SOIL\lib\$(PlatformTarget);..\..\external\GLEW\lib\$(PlatformTarget)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2test.lib;SDL2_mixer.lib;SOIL.lib;glew32.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
