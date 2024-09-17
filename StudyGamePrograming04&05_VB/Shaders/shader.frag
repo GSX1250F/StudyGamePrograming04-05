@@ -9,6 +9,5 @@ uniform sampler2D uTexture;
 
 void main()
 {
-	// テクスチャから色をサンプリングする
 	outColor = texture(uTexture, fragTexCoord);
 }

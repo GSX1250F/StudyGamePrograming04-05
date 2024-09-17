@@ -47,11 +47,6 @@ void Brave::ActorInput(const SDL_Event& event){
 				angularSpeed = Math::Pi;
 			}
 		}
-		else
-		{
-			forwardSpeed = 0.0f;
-			angularSpeed = 0.0f;
-		}
 		mc->SetVelocity(forwardSpeed * GetForward());
 		mc->SetRotSpeed(angularSpeed);		
 	}	

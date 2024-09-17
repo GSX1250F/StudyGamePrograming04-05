@@ -262,7 +262,7 @@ bool Renderer::LoadShaders()
 	// ビュー射影変換行列を作成。
 	// Set the view-projection matrix
 	mView = Matrix4::CreateLookAt(Vector3::Zero, Vector3::UnitX, Vector3::UnitZ);
-	mProjection = Matrix4::CreatePerspectiveFOV(Math::Pi*0.5,	mScreenWidth, mScreenHeight, 0.01f, 5000.0f);
+	mProjection = Matrix4::CreatePerspectiveFOV(Math::Pi*0.5, mScreenWidth, mScreenHeight, 0.01f, 5000.0f);
 	mShader->SetMatrixUniform("uViewProj", mView * mProjection);
 
 	return true;

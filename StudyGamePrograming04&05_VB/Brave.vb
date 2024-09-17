@@ -21,7 +21,19 @@ Public Class Brave
 	End Sub
 	Public Overrides Sub ActorInput(ByVal keyState As KeyboardState)
 		If (GetGame().GetMaze().GetGameStart()) Then
-
+			Dim forwardSpeed As Double = 0.0
+			Dim angularSpeed As Double = 0.0
+			If (keyState.IsKeyDown(Keys.Up)) Then
+				forwardSpeed = speed
+			ElseIf (keyState.IsKeyDown(Keys.Down)) Then
+				forwardSpeed = -speed
+			ElseIf (keyState.IsKeyDown(Keys.Left)) Then
+				angularSpeed = -Math.PI
+			ElseIf (keyState.IsKeyDown(Keys.Right)) Then
+				angularSpeed = Math.PI
+			End If
+			mc.SetVelocity(forwardSpeed * GetForward())
+			mc.SetRotSpeed(angularSpeed)
 		End If
 	End Sub
 	Public Overrides Sub UpdateActor(ByVal deltaTime As Double)

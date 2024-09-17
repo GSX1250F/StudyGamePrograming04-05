@@ -69,9 +69,6 @@ Public Class Renderer
         mVertexInfo.SetActive()
         mShader.SetActive()
 
-
-        mView = Matrix4.LookAt(Vector3.Zero, Vector3.UnitX, Vector3.UnitZ)
-        mProjection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.Pi * 0.5, mScreenWidth / mScreenHeight, 0.01, 5000.0)
         mShader.SetMatrixUniform("uViewProj", mView * mProjection)
 
         'すべてのスプライトコンポーネントを描画
@@ -80,6 +77,7 @@ Public Class Renderer
                 sprite.Draw(mShader)
             End If
         Next
+
         mGame.SwapBuffers()
     End Sub
 
@@ -212,9 +210,14 @@ Public Class Renderer
     Private Function LoadShaders() As Boolean
         ' シェーダーを生成
         mShader = New Shader()
-        If (mShader.Load("Shaders/Shader.vert", "Shaders/Shader.frag") <> True) Then
+        If (mShader.Load("Shaders/shader.vert", "Shaders/shader.frag") <> True) Then
             Return False
         End If
+        mShader.SetActive()
+        mView = Matrix4.LookAt(Vector3.Zero, Vector3.UnitX, Vector3.UnitZ)
+        mProjection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.Pi * 0.5, mScreenWidth / mScreenHeight, 0.01, 5000.0)
+        mShader.SetMatrixUniform("uViewProj", mView * mProjection)
+
         Return True
     End Function
     Private disposedValue As Boolean

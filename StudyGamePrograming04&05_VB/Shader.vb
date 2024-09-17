@@ -27,7 +27,7 @@ Public Class Shader
         MyBase.Finalize()
         Dispose(False)
     End Sub
-    Public Function Load(ByRef vertName As String, ByRef fragName As String)
+    Public Function Load(ByVal vertName As String, ByVal fragName As String)
         If CompileShader(vertName, ShaderType.VertexShader, mVertexShader) = False Then
             Return False
         End If
@@ -57,7 +57,7 @@ Public Class Shader
     Public Sub SetActive()
         GL.UseProgram(mShaderProgram)
     End Sub
-    Public Sub SetMatrixUniform(ByRef name As String, ByRef matrix As Matrix4)
+    Public Sub SetMatrixUniform(ByVal name As String, ByRef matrix As Matrix4)
         'nameと同じuniform変数をシェーダープログラムから探し、そのIDを受け取る。
         Dim uniformId As Integer = GL.GetUniformLocation(mShaderProgram, name)
         'matrixで上書き
@@ -66,7 +66,7 @@ Public Class Shader
 
     'private
     Private disposedValue As Boolean
-    Private Function CompileShader(ByRef fileName As String, ByVal shaderType As ShaderType, ByRef outShader As Integer)
+    Private Function CompileShader(ByVal fileName As String, ByVal shaderType As ShaderType, ByRef outShader As Integer)
         If System.IO.File.Exists(fileName) Then
             'すべてのテキストを1つの文字列に読み込む
             Dim sstream As String = File.ReadAllText(fileName)
