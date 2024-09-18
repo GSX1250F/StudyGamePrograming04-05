@@ -36,7 +36,8 @@ Public Class Renderer
 		GL.ClearColor(0.3, 0.3, 0.3, 1.0)
 		' 画面初期化
 		GL.Viewport(0, 0, screenWidth, screenHeight)
-
+		'テクスチャ有効化
+		GL.Enable(EnableCap.Texture2D)
 		mView = Matrix4.LookAt(Vector3.Zero, Vector3.UnitX, Vector3.UnitZ)
 		mProjection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.Pi * 0.5, mScreenWidth / mScreenHeight, 0.01, 5000.0)
 

@@ -43,23 +43,22 @@ Public Class Actor
         Dispose(False)
     End Sub
 
-    'ゲームから呼び出される更新関数(オーバーライド不可)
     Public Sub Update(ByVal deltaTime As Double)
         If mState = State.EActive Or mState = State.EPaused Then
             ComputeWorldTransform()
-            For Each comp In mComponents
-                comp.Update(deltaTime)
-            Next
+            UpdateComponents(deltaTime)
             UpdateActor(deltaTime)
             ComputeWorldTransform()
         End If
     End Sub
-
-    'アクター独自の更新処理(オーバーライド可能)
-    Public Overridable Sub UpdateActor(ByVal deltaTime As Double)
+    Public Sub UpdateComponents(ByVal deltaTime As Double)
+        For Each comp In mComponents
+            comp.Update(deltaTime)
+        Next
     End Sub
 
-    'ゲームから呼び出されるProcess Input(オーバーライド不可)
+    Public Overridable Sub UpdateActor(ByVal deltaTime As Double)
+    End Sub
     Public Sub ProcessInput(ByVal keyState As Boolean())
         If mState = State.EActive Then
             For Each comp In mComponents
@@ -69,11 +68,9 @@ Public Class Actor
         ActorInput(keyState)
     End Sub
 
-    'アクター独自の入力処理(オーバーライド可能)
     Public Overridable Sub ActorInput(ByVal keyState As Boolean())
     End Sub
 
-    'Getters/setters
     Public Function GetPosition() As Vector3
         Return mPosition
     End Function
@@ -103,7 +100,7 @@ Public Class Actor
         mRecomputeWorldTransform = True
     End Sub
     Public Function GetForward() As Vector3
-        Dim v = New Vector3(Math.Cos(mRotation), Math.Sin(mRotation), 0.0)       '向きの単位ベクトル
+        Dim v = New Vector3(Math.Cos(mRotation), Math.Sin(mRotation), 0.0)
         Return v
     End Function
     Public Function GetState() As State
@@ -116,7 +113,6 @@ Public Class Actor
         Return mGame
     End Function
 
-    ' Add/remove components
     Public Sub AddComponent(ByRef component As Component)
         'ソート済みの配列で挿入点を見つける
         Dim myOrder As Integer = component.GetUpdateOrder()
