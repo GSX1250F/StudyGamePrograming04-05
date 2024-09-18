@@ -42,11 +42,14 @@ Public Class Renderer
 		GL.ClearColor(0.3, 0.3, 0.3, 1.0)
 		' 画面初期化
 		GL.Viewport(0, 0, screenWidth, screenHeight)
-		'テクスチャ有効化
-		GL.Enable(EnableCap.Texture2D)
+
+		mView = Matrix4.LookAt(Vector3.Zero, Vector3.UnitX, Vector3.UnitZ)
+		mProjection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.Pi * 0.5, mScreenWidth / mScreenHeight, 0.01, 5000.0)
+
 		Return True
 	End Function
 	Public Sub Shutdown()
+		UnloadData()
 		mWindow.Dispose()
 		Me.Dispose()
 	End Sub
@@ -62,10 +65,13 @@ Public Class Renderer
 		GL.Enable(EnableCap.Blend)
 		GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha)
 
+		'ビュー＆射影変換行列を作成
+		mViewProj = mView * mProjection
+
 		'すべてのスプライトコンポーネントを描画
 		For Each sprite In mSprites
 			If sprite.GetVisible() = True Then
-				sprite.Draw()
+				sprite.Draw(mViewProj)
 			End If
 		Next
 		mWindow.SwapBuffers()
@@ -118,4 +124,14 @@ Public Class Renderer
 	Public Function GetScreenHeight() As Double
 		Return mScreenHeight
 	End Function
+	Public Sub SetViewMatrix(ByRef matrix As Matrix4)
+		mView = matrix
+	End Sub
+	Public Sub SetProjectionMatrix(ByRef matrix As Matrix4)
+		mProjection = matrix
+	End Sub
+
+	Private mView As Matrix4
+	Private mProjection As Matrix4
+	Private mViewProj As Matrix4
 End Class

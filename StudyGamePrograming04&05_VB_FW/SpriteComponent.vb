@@ -31,41 +31,65 @@ Public Class SpriteComponent
         MyBase.Dispose(disposing)
     End Sub
 
-    Public Overridable Sub Draw()
+    Public Overridable Sub Draw(ByRef viewProj As Matrix4)
         If (mTexture IsNot Nothing) And (mVisible = True) Then
-            mTexture.SetActive()
+
 
             'TriangleStripの場合、0,1,2→1つ目、2,1,3→2つ目の三角形となる。
-            Dim vertices As List(Of Vector2) = New List(Of Vector2) From {
-                    New Vector2(-0.5, -0.5),
-                    New Vector2(0.5, -0.5),
-                    New Vector2(-0.5, 0.5),
-                    New Vector2(0.5, 0.5)}
-            Dim texcoords As List(Of Vector2) = New List(Of Vector2) From {New Vector2(0.0, 0.0),
-                                                                       New Vector2(1.0, 0.0),
-                                                                       New Vector2(0.0, 1.0),
-                                                                       New Vector2(1.0, 1.0)}
+            Dim vertices As List(Of Vector3) = New List(Of Vector3) From {
+                    New Vector3(-0.5, 0.5, 0.5),        '前面左上
+                    New Vector3(-0.5, -0.5, 0.5),       '前面左下
+                    New Vector3(0.5, -0.5, 0.5),        '前面右下
+                    New Vector3(0.5, 0.5, 0.5),         '前面右上
+                    New Vector3(0.5, 0.5, 0.5),         '右面左上
+                    New Vector3(0.5, -0.5, 0.5),        '右面左下
+                    New Vector3(0.5, -0.5, -0.5),       '右面右下
+                    New Vector3(0.5, 0.5, -0.5),        '右面右上
+                    New Vector3(0.5, 0.5, -0.5),        '後面左上
+                    New Vector3(0.5, 0.5, -0.5),        '後面左下
+                    New Vector3(-0.5, -0.5, -0.5),      '後面右下
+                    New Vector3(-0.5, -0.5, -0.5),      '後面右上
+                    New Vector3(-0.5, 0.5, -0.5),       '左面左上
+                    New Vector3(-0.5, -0.5, -0.5),      '左面左下
+                    New Vector3(-0.5, -0.5, 0.5),       '左面右下
+                    New Vector3(-0.5, 0.5, 0.5)         '左面右上
+            }
+            Dim texcoords As List(Of Vector2) = New List(Of Vector2) From {
+                    New Vector2(0.0, 1.0),      '左上
+                    New Vector2(0.0, 0.0),      '左下
+                    New Vector2(1.0, 0.0),      '右下
+                    New Vector2(1.0, 1.0),      '右上
+                    New Vector2(0.0, 1.0),      '左上
+                    New Vector2(0.0, 0.0),      '左下
+                    New Vector2(1.0, 0.0),      '右下
+                    New Vector2(1.0, 1.0),      '右上
+                    New Vector2(0.0, 1.0),      '左上
+                    New Vector2(0.0, 0.0),      '左下
+                    New Vector2(1.0, 0.0),      '右下
+                    New Vector2(1.0, 1.0),      '右上
+                    New Vector2(0.0, 1.0),      '左上
+                    New Vector2(0.0, 0.0),      '左下
+                    New Vector2(1.0, 0.0),      '右下
+                    New Vector2(1.0, 1.0)       '右上
+            }
 
             ' テクスチャサイズで再スケーリングしたワールド変換行列を作成
             Dim scaleMat As Matrix4 = Matrix4.CreateScale(mTexWidth)
             Dim world As Matrix4 = scaleMat * mOwner.GetWorldTransform()
 
-            'OpenGLで四角形を描画（'TriangleStripの場合、0,1,2→1つ目、1,2,3→2つ目の三角形となる。）
-            GL.Begin(PrimitiveType.TriangleStrip)
+            ' 現在のテクスチャをセット
+            mTexture.SetActive()
+
+            '短形を描画
+            GL.Begin(PrimitiveType.Quads)
             ' 各頂点を行列で変換
             For i = 0 To vertices.Count - 1
-                Dim v As Vector4 = New Vector4(vertices(i).X, vertices(i).Y, 0.0, 1.0)
-                'ワールド変換
-                v *= world
-                ' ビュー変換　（2D不要）
-                ' 射影変換　（2D不要）
-                ' ビューポート変換
-                scaleMat = Matrix4.CreateOrthographic(mOwner.GetGame().mWindowWidth, mOwner.GetGame().mWindowHeight, 0.01, 1.0)
-                'scaleMat = Matrix4.CreateScale(1.0 / mOwner.GetGame().mWindowWidth, 1.0 / mOwner.GetGame().mWindowHeight, 0.0)
-                v *= scaleMat
+                Dim v As Vector4 = New Vector4(vertices(i), 1.0)
+                'ワールド＆ビュー射影変換
+                v *= world * viewProj
 
                 GL.TexCoord2(texcoords(i).X, texcoords(i).Y)
-                GL.Vertex2(v.X, v.Y)
+                GL.Vertex3(v.X, v.Y, v.Z)
             Next
             GL.End()
 

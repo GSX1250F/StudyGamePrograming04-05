@@ -15,8 +15,8 @@
         'スプライトコンポーネントを作成
         ssc = New SomeSpriteComponent(Me, 10)
         Dim texfiles As New List(Of String) From {
-            "/Assets/Default.png",
-            "/Assets/Wall.png"
+            "Assets/Default.png",
+            "Assets/Wall.png"
         }
         ssc.TextureFiles = texfiles
         ssc.SetSomeTextures(ssc.TextureFiles)

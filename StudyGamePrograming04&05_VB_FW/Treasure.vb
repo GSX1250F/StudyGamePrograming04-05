@@ -4,7 +4,7 @@
 		MyBase.New(game)
 		'スプライトコンポーネント作成、テクスチャ設定
 		sc = New SpriteComponent(Me, 20)
-		sc.SetTexture(game.GetRenderer().GetTexture("/Assets/Treasure.png"))
+		sc.SetTexture(game.GetRenderer().GetTexture("Assets/Treasure.png"))
 
 		'CircleComponent作成
 		cc = New CircleComponent(Me, 100)

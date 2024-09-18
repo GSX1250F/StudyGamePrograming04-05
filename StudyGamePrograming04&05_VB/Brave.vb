@@ -64,7 +64,6 @@ Public Class Brave
 		Dim view = Matrix4.LookAt(cameraPos, target, up)
 		GetGame().GetRenderer().SetViewMatrix(view)
 
-
 	End Sub
 
 	Public Function GetSprite() As SpriteComponent

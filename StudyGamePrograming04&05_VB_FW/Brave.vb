@@ -7,7 +7,7 @@ Public Class Brave
 		SetScale(0.85)
 
 		sc = New SpriteComponent(Me, 100)
-		sc.SetTexture(game.GetRenderer.GetTexture("/Assets/ClearPict.png"))
+		sc.SetTexture(game.GetRenderer.GetTexture("Assets/ClearPict.png"))
 		sc.SetVisible(False)
 
 		'CircleComponent作成
@@ -38,6 +38,7 @@ Public Class Brave
 			If (Intersect(cc, GetGame().GetMaze().GetTreasure().GetCircle())) Then
 				' ゴール
 				GetGame().GetMaze().SetGameClear(True)
+				sc.SetVisible(True)
 			End If
 		End If
 
@@ -53,6 +54,13 @@ Public Class Brave
 				End If
 			Next
 		Next
+
+		Dim cameraPos As Vector3 = GetPosition()
+		Dim target As Vector3 = GetPosition() + GetForward() * 300.0
+		Dim up As Vector3 = -Vector3.UnitZ
+		Dim view = Matrix4.LookAt(cameraPos, target, up)
+		GetGame().GetRenderer().SetViewMatrix(view)
+
 	End Sub
 
 	Public Function GetSprite() As SpriteComponent
