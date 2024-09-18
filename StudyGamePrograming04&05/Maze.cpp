@@ -43,9 +43,7 @@ Maze::Maze(Game* game, int mapWidth, int mapHeight)
 	mTileSize = mTiles[0][0]->GetTexSize();
 
 	mBrave = new Brave(game);			//プレイヤー
-	//mShadow = new Shadow(game);			//AIプレイヤー
 	mTreasure = new Treasure(game);		//ゴール
-	//mClearPict = new ClearPict(game);	//クリア画面
 }
 
 void Maze::ActorInput(const SDL_Event& event)
@@ -62,20 +60,13 @@ void Maze::ActorInput(const SDL_Event& event)
 
 void Maze::UpdateActor(float deltaTime){
 	if (gameClear == true) 
-	{
-		//mClearPict->SetState(EActive);
-		//mClearPict->GetSprite()->SetVisible(true);
-	}
+	{	}
 	if (resetStart == true)
 	{
 		mBrave->SetState(EPaused);
 		mBrave->GetSprite()->SetVisible(false);
-		//mShadow->SetState(EPaused);
-		//mShadow->GetSprite()->SetVisible(false);
 		mTreasure->SetState(EPaused);
 		mTreasure->GetSprite()->SetVisible(false);
-		//mClearPict->SetState(EPaused);
-		//mClearPict->GetSprite()->SetVisible(false);
 		for (int i = 0; i < mTiles.size(); i++)
 		{
 			mTiles[i].resize(mMapHeight);
@@ -104,11 +95,7 @@ void Maze::UpdateActor(float deltaTime){
 	else if (resetEnd == true)
 	{
 		mBrave->SetState(EActive);
-		//mBrave->GetSprite()->SetVisible(true);
 		mBrave->SetPosition(GetTilePos(starti, startj));
-		//mShadow->SetState(EActive);
-		//mShadow->GetSprite()->SetVisible(true);
-		//mShadow->SetPosition(GetTilePos(starti, startj));
 		mTreasure->SetState(EActive);
 		mTreasure->GetSprite()->SetVisible(true);
 		mTreasure->SetPosition(GetTilePos(goali, goalj));
@@ -125,9 +112,8 @@ void Maze::UpdateActor(float deltaTime){
 		//隣接ノード作成
 		MakeGraphNodes(mTiles);
 		// 道順探索 (逆順)
-		if (FindPath(GetGoalTile(), GetStartTile())) {
-			//mShadow->GetNav()->SetStartNode(GetStartTile());
-		}
+		if (FindPath(GetGoalTile(), GetStartTile())) 
+		{ }
 		
 		resetEnd = false;
 		gameStart = true;
@@ -179,7 +165,6 @@ void Maze::GenerateMap()
 
 Vector3 Maze::GetTilePos(int i, int j)
 {
-	//Vector2 pos = mTileSize * Vector2((i + 1) * 1.0f, (j + 1) * 1.0f);
 	Vector2 pos = mTileSize * (Vector2((i + 1) * 1.0f, (j + 1) * 1.0f) + Vector2(-mMapWidth/2-1,-mMapHeight/2-1));
 	return Vector3(pos.x, pos.y, 0.0f);
 }

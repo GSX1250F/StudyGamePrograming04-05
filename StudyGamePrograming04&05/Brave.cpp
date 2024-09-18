@@ -40,11 +40,11 @@ void Brave::ActorInput(const SDL_Event& event){
 			}
 			else if (event.key.keysym.sym == SDLK_LEFT)
 			{
-				angularSpeed = -Math::Pi;
+				angularSpeed = Math::Pi;
 			}
 			else if (event.key.keysym.sym == SDLK_RIGHT)
 			{
-				angularSpeed = Math::Pi;
+				angularSpeed = -Math::Pi;
 			}
 		}
 		mc->SetVelocity(forwardSpeed * GetForward());
@@ -78,7 +78,7 @@ void Brave::UpdateActor(float deltaTime){
 		// Compute new camera from this actor
 		Vector3 cameraPos = GetPosition();
 		Vector3 target = GetPosition() + GetForward() * 300.0f;
-		Vector3 up = Vector3::UnitZ;
+		Vector3 up = -1.0 * Vector3::UnitZ;
 
 		Matrix4 view = Matrix4::CreateLookAt(cameraPos, target, up);
 		GetGame()->GetRenderer()->SetViewMatrix(view);

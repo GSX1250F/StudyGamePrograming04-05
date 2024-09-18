@@ -4,14 +4,8 @@ Imports OpenTK.Graphics.OpenGL
 
 Public Class Renderer
 	Implements IDisposable      '明示的にクラスを開放するために必要
-	Private disposedValue As Boolean
-	Private mGame As Game
-	Private mWindow As GLControl
-	Private mScreenWidth As Integer
-	Private mScreenHeight As Integer
-	Private mTextures As New Dictionary(Of String, Texture)   'ファイル名→OpenGLのテクスチャのインデックスの連想配列
-	Private mSprites As New List(Of SpriteComponent)    'スプライトコンポーネントの配列
 
+	'public
 	Sub New(ByRef game As Game)
 		mGame = game
 		mWindow = Nothing
@@ -131,6 +125,13 @@ Public Class Renderer
 		mProjection = matrix
 	End Sub
 
+	Private disposedValue As Boolean
+	Private mGame As Game
+	Private mWindow As GLControl
+	Private mScreenWidth As Integer
+	Private mScreenHeight As Integer
+	Private mTextures As New Dictionary(Of String, Texture)   'ファイル名→OpenGLのテクスチャのインデックスの連想配列
+	Private mSprites As New List(Of SpriteComponent)    'スプライトコンポーネントの配列
 	Private mView As Matrix4
 	Private mProjection As Matrix4
 	Private mViewProj As Matrix4

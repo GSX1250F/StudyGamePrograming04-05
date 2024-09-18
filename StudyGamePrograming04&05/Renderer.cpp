@@ -196,24 +196,24 @@ void Renderer::CreateVertexInfo()
 		 0.5f,  0.5f, -0.5f,	//back left upper
 		-0.5f,  0.5f, -0.5f		//back right upper
 	};
-	//テクスチャ座標(vector2)
+	//テクスチャ座標(vector2)	上下反転。※Clear画像のためにわざと左右も反転
 	float texCoord[] = {
-		 0.0f, 0.0f,
-		 1.0f, 0.0f,
-		 0.0f, 1.0f,
 		 1.0f, 1.0f,
-		 0.0f, 0.0f,
-		 1.0f, 0.0f,
 		 0.0f, 1.0f,
+		 1.0f, 0.0f,
+		 0.0f, 0.0f,
 		 1.0f, 1.0f,
-		 0.0f, 0.0f,
-		 1.0f, 0.0f,
 		 0.0f, 1.0f,
+		 1.0f, 0.0f,
+		 0.0f, 0.0f,
 		 1.0f, 1.0f,
-		 0.0f, 0.0f,
-		 1.0f, 0.0f,
 		 0.0f, 1.0f,
-		 1.0f, 1.0f
+		 1.0f, 0.0f,
+		 0.0f, 0.0f,
+		 1.0f, 1.0f,
+		 0.0f, 1.0f,
+		 1.0f, 0.0f,
+		 0.0f, 0.0f
 	};
 	//頂点カラー(vector4 RGBA)
 	float vertColor[] = {

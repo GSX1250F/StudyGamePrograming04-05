@@ -3,18 +3,12 @@
 Public Class Actor
     Implements IDisposable      '明示的にクラスを開放するために必要
 
+    'public
     Public Enum State
         EActive     '稼働中
         EPaused     '休止中
         EDead       '削除対象
     End Enum
-    Private mState As State              ' アクターの状態
-    Private mPosition As Vector3        '位置
-    Private mScale As Double            '拡大率
-    Private mRotation As Double         '回転
-    Private mRadius As Double           '半径（拡大率は無視）
-    Private mComponents As New List(Of Component)   '各コンポーネントのリスト
-    Private mGame As Game   'Gameクラスのメンバにアクセスするための変数
 
     Sub New(ByRef game As Game)
         mState = State.EActive
@@ -157,6 +151,15 @@ Public Class Actor
             mWorldTransform *= Matrix4.CreateTranslation(mPosition)
         End If
     End Sub
+
+    'private
+    Private mState As State              ' アクターの状態
+    Private mPosition As Vector3        '位置
+    Private mScale As Double            '拡大率
+    Private mRotation As Double         '回転
+    Private mRadius As Double           '半径（拡大率は無視）
+    Private mComponents As New List(Of Component)   '各コンポーネントのリスト
+    Private mGame As Game   'Gameクラスのメンバにアクセスするための変数
     Private mRecomputeWorldTransform As Boolean
     Private mWorldTransform As Matrix4
 End Class

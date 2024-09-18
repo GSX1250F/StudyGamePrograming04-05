@@ -150,6 +150,7 @@ Public Class Actor
         End If
     End Sub
 
+    'private
     Private mState As State              ' アクターの状態
     Private mPosition As Vector3        '位置
     Private mScale As Double            '拡大率
