@@ -196,7 +196,7 @@ void Renderer::CreateVertexInfo()
 		 0.5f,  0.5f, -0.5f,	//back left upper
 		-0.5f,  0.5f, -0.5f		//back right upper
 	};
-	//テクスチャ座標(vector2)	上下反転。※Clear画像のためにわざと左右も反転
+	//テクスチャ座標(vector2)	※Clear画像のためにわざと左右も反転
 	float texCoord[] = {
 		 1.0f, 1.0f,
 		 0.0f, 1.0f,

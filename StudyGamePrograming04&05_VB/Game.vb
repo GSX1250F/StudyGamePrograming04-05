@@ -151,8 +151,8 @@ Public Class Game
     End Sub
 
     Private Sub LoadData()
-        mMaze = New Maze(Me, 51, 29)        '迷路クラス
-        'mMaze = New Maze(Me, 7, 7)        'テスト用
+        'mMaze = New Maze(Me, 51, 29)        '迷路クラス
+        mMaze = New Maze(Me, 7, 7)        'テスト用
     End Sub
 
     Private Sub UnloadData()

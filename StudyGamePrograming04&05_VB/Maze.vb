@@ -66,7 +66,6 @@ Public Class Maze
             resetEnd = True
         ElseIf (resetEnd = True) Then
             mBrave.SetState(State.EActive)
-            'mBrave.GetSprite().SetVisible(True)
             mBrave.SetPosition(GetTilePos(starti, startj))
             mTreasure.SetState(State.EActive)
             mTreasure.GetSprite().SetVisible(True)

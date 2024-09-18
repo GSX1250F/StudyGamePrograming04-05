@@ -28,9 +28,9 @@ Public Class Brave
 			ElseIf (keyState.IsKeyDown(Keys.Down)) Then
 				forwardSpeed = -speed
 			ElseIf (keyState.IsKeyDown(Keys.Left)) Then
-				angularSpeed = -Math.PI
-			ElseIf (keyState.IsKeyDown(Keys.Right)) Then
 				angularSpeed = Math.PI
+			ElseIf (keyState.IsKeyDown(Keys.Right)) Then
+				angularSpeed = -Math.PI
 			End If
 			mc.SetVelocity(forwardSpeed * GetForward())
 			mc.SetRotSpeed(angularSpeed)
@@ -60,7 +60,7 @@ Public Class Brave
 
 		Dim cameraPos As Vector3 = GetPosition()
 		Dim target As Vector3 = GetPosition() + GetForward() * 300.0
-		Dim up As Vector3 = -Vector3.UnitZ
+		Dim up As Vector3 = Vector3.UnitZ
 		Dim view = Matrix4.LookAt(cameraPos, target, up)
 		GetGame().GetRenderer().SetViewMatrix(view)
 

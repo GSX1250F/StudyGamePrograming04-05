@@ -32,7 +32,7 @@ Public Class Texture
 
     Public Function Load(ByRef filename As String) As Boolean
         If System.IO.File.Exists(filename) Then
-            StbImage.stbi_set_flip_vertically_on_load(1)
+            'StbImage.stbi_set_flip_vertically_on_load(1)
             mTextureID = GL.GenTexture()
             GL.BindTexture(TextureTarget.Texture2D, mTextureID)
             Using stream As Stream = File.OpenRead(filename)
