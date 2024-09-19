@@ -190,8 +190,4 @@ Public Class Game
 
     'Game-specific
     Private mMaze As Maze
-
-    Private Sub Game_KeyUp(sender As Object, e As KeyEventArgs) Handles MyBase.KeyUp
-        If e.KeyData = Keys.R Then mRKeyUpEvent = True
-    End Sub
 End Class

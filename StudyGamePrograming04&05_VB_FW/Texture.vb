@@ -41,7 +41,8 @@ Public Class Texture
                 mTexWidth = image.Width
                 mTexHeight = image.Height
             End Using
-
+            'テクスチャ有効化
+            GL.Enable(EnableCap.Texture2D)
             'バイリニアフィルタリングを有効化
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, Int(TextureMinFilter.Linear))
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, Int(TextureMagFilter.Linear))

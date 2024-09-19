@@ -36,7 +36,7 @@ Public Class Maze
         mTreasure = New Treasure(game)      'ゴール
     End Sub
     Public Overrides Sub ActorInput(ByVal keyState As Boolean())
-        If (GetGame().GetRKeyUpEvent()) Then resetStart = True
+        If (keyState(Keys.R)) Then resetStart = True
     End Sub
     Public Overrides Sub UpdateActor(ByVal deltaTime As Double)
         If (gameClear = True) Then

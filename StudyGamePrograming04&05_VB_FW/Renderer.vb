@@ -32,14 +32,18 @@ Public Class Renderer
 		mScreenHeight = screenHeight
 		mWindow = mGame.GetGLControl()
 
+
 		' 背景色の設定
 		GL.ClearColor(0.3, 0.3, 0.3, 1.0)
-		' 画面初期化
-		GL.Viewport(0, 0, screenWidth, screenHeight)
-		'テクスチャ有効化
-		GL.Enable(EnableCap.Texture2D)
-		mView = Matrix4.LookAt(Vector3.Zero, Vector3.UnitX, Vector3.UnitZ)
-		mProjection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.Pi * 0.5, mScreenWidth / mScreenHeight, 0.01, 5000.0)
+		' 深度テスト有効化
+		GL.Enable(EnableCap.DepthTest)
+
+		'クリッピングウィンドウの設定
+		GL.MatrixMode(MatrixMode.Projection)
+		GL.LoadIdentity()
+		GL.Ortho(-screenWidth / 2, screenWidth / 2, -screenHeight / 2, screenHeight / 2, -screenWidth * 3, screenWidth * 3)
+		'マトリックスモードを戻しておく
+		GL.MatrixMode(MatrixMode.Modelview)
 
 		Return True
 	End Function
@@ -52,23 +56,36 @@ Public Class Renderer
 		mTextures.Clear()
 	End Sub
 	Public Sub Draw()
-		'画面のクリア
-		GL.ClearColor(0.3, 0.3, 0.3, 1.0)
+		'画面のクリア＆深度バッファクリア
 		GL.Clear(ClearBufferMask.ColorBufferBit Or ClearBufferMask.DepthBufferBit)
-		GL.Enable(EnableCap.DepthTest)
-		'アルファブレンディング
+		'アルファブレンディング有効化
 		GL.Enable(EnableCap.Blend)
 		GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha)
-
-		'ビュー＆射影変換行列を作成
-		mViewProj = mView * mProjection
 
 		'すべてのスプライトコンポーネントを描画
 		For Each sprite In mSprites
 			If sprite.GetVisible() = True Then
-				sprite.Draw(mViewProj)
+				sprite.Draw()
 			End If
 		Next
+
+		'ビュー変換
+		GL.MatrixMode(MatrixMode.Modelview)
+		GL.LoadIdentity()
+		GL.LoadMatrix(mView)
+
+		' ビューポート再設定
+		GL.Viewport(0, 0, mScreenWidth, mScreenHeight)
+
+		'マトリックスの再構築
+		GL.MatrixMode(MatrixMode.Projection)
+		GL.LoadIdentity()
+		'クリッピングウィンドウの設定
+		'GL.Ortho(-mScreenWidth / 2, mScreenWidth / 2, -mScreenHeight / 2, mScreenHeight / 2, -mScreenWidth * 3, mScreenWidth * 3)       '平行投影
+		Dim mProj = Matrix4.CreatePerspectiveFieldOfView(MathHelper.Pi / 2, mScreenWidth / mScreenHeight, 0.1, 10000)       '透過投影
+		GL.LoadMatrix(mProj)
+		GL.MatrixMode(MatrixMode.Modelview)
+
 		mWindow.SwapBuffers()
 		mWindow.Refresh()
 	End Sub
