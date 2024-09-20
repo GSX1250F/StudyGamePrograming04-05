@@ -1,10 +1,8 @@
 ﻿Imports OpenTK
 Imports OpenTK.Graphics
 Imports OpenTK.Graphics.OpenGL
-
 Public Class Renderer
 	Implements IDisposable      '明示的にクラスを開放するために必要
-
 	'public
 	Sub New(ByRef game As Game)
 		mGame = game
@@ -32,16 +30,21 @@ Public Class Renderer
 		mScreenHeight = screenHeight
 		mWindow = mGame.GetGLControl()
 
-
 		' 背景色の設定
 		GL.ClearColor(0.3, 0.3, 0.3, 1.0)
 		' 深度テスト有効化
 		GL.Enable(EnableCap.DepthTest)
 
+		'ビュー変換の初期化
+		GL.MatrixMode(MatrixMode.Modelview)
+		mView = Matrix4.Identity
+		GL.LoadMatrix(mView)
+		' ビューポート設定
+		GL.Viewport(0, 0, mScreenWidth, mScreenHeight)
 		'クリッピングウィンドウの設定
 		GL.MatrixMode(MatrixMode.Projection)
-		GL.LoadIdentity()
-		GL.Ortho(-screenWidth / 2, screenWidth / 2, -screenHeight / 2, screenHeight / 2, -screenWidth * 3, screenWidth * 3)
+		mProj = Matrix4.CreatePerspectiveFieldOfView(MathHelper.Pi / 2, mScreenWidth / mScreenHeight, 0.1, 10000)       '透過投影
+		GL.LoadMatrix(mProj)
 		'マトリックスモードを戻しておく
 		GL.MatrixMode(MatrixMode.Modelview)
 
@@ -58,7 +61,7 @@ Public Class Renderer
 	Public Sub Draw()
 		'画面のクリア＆深度バッファクリア
 		GL.Clear(ClearBufferMask.ColorBufferBit Or ClearBufferMask.DepthBufferBit)
-		'アルファブレンディング有効化
+		'アルファブレンディング
 		GL.Enable(EnableCap.Blend)
 		GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha)
 
@@ -68,21 +71,15 @@ Public Class Renderer
 				sprite.Draw()
 			End If
 		Next
-
 		'ビュー変換
 		GL.MatrixMode(MatrixMode.Modelview)
-		GL.LoadIdentity()
 		GL.LoadMatrix(mView)
 
 		' ビューポート再設定
 		GL.Viewport(0, 0, mScreenWidth, mScreenHeight)
 
-		'マトリックスの再構築
+		'クリッピングウィンドウの再設定
 		GL.MatrixMode(MatrixMode.Projection)
-		GL.LoadIdentity()
-		'クリッピングウィンドウの設定
-		'GL.Ortho(-mScreenWidth / 2, mScreenWidth / 2, -mScreenHeight / 2, mScreenHeight / 2, -mScreenWidth * 3, mScreenWidth * 3)       '平行投影
-		Dim mProj = Matrix4.CreatePerspectiveFieldOfView(MathHelper.Pi / 2, mScreenWidth / mScreenHeight, 0.1, 10000)       '透過投影
 		GL.LoadMatrix(mProj)
 		GL.MatrixMode(MatrixMode.Modelview)
 
@@ -140,9 +137,10 @@ Public Class Renderer
 		mView = matrix
 	End Sub
 	Public Sub SetProjectionMatrix(ByRef matrix As Matrix4)
-		mProjection = matrix
+		mProj = matrix
 	End Sub
 
+	'private
 	Private disposedValue As Boolean
 	Private mGame As Game
 	Private mWindow As GLControl
@@ -151,6 +149,5 @@ Public Class Renderer
 	Private mTextures As New Dictionary(Of String, Texture)   'ファイル名→OpenGLのテクスチャのインデックスの連想配列
 	Private mSprites As New List(Of SpriteComponent)    'スプライトコンポーネントの配列
 	Private mView As Matrix4
-	Private mProjection As Matrix4
-	Private mViewProj As Matrix4
+	Private mProj As Matrix4
 End Class
