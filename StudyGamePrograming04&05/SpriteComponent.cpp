@@ -25,8 +25,8 @@ void SpriteComponent::Draw(Shader* shader)
 	if (mTexture && mVisible)
 	{
 		// テクスチャサイズで再スケーリングしたワールド変換行列を作成
-		Matrix4 scaleMat = Matrix4::CreateScale(static_cast<float>(mTexWidth));
-		Matrix4 world = scaleMat * mOwner->GetWorldTransform();
+		Matrix4 world = Matrix4::CreateScale(static_cast<float>(mTexWidth), static_cast<float>(mTexHeight), 1.0f);
+		world *= mOwner->GetWorldTransform();
 		// ワールド変換
 		shader->SetMatrixUniform("uWorldTransform", world);
 		// 現在のテクスチャをセット
@@ -34,7 +34,7 @@ void SpriteComponent::Draw(Shader* shader)
 		// 短形を描画
 		glDrawElements(
 			GL_TRIANGLES,		// 描画するポリゴン／プリミティブの種類
-			24,					// インデックスバッファにあるインデックスの数
+			mOwner->GetGame()->GetRenderer()->GetVertexInfo()->GetNumIndices(),		// インデックスバッファにあるインデックスの数
 			GL_UNSIGNED_INT,	// インデックスの型
 			nullptr				// 通常はnullptr
 		);

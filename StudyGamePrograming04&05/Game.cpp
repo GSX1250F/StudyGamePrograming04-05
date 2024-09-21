@@ -45,8 +45,6 @@ bool Game::Initialize()
 
 	LoadData();
 
-	mTicksCount = SDL_GetTicks();
-
 	return true;
 }
 

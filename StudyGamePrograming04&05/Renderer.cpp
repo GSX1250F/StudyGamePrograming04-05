@@ -78,6 +78,8 @@ bool Renderer::Initialize(float screenWidth, float screenHeight)
 		return false;
 	}
 
+	// 画面クリアの色を設定
+	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 
 	return true;
 }
@@ -110,7 +112,6 @@ void Renderer::Draw()
 	);
 	//深度有効化
 	glEnable(GL_DEPTH_TEST);
-	//glDepthMask(true);
 
 	// シェーダーとバーテックス配列オブジェクトを有効化
 	mVertexInfo->SetActive();
@@ -187,14 +188,14 @@ void Renderer::CreateVertexInfo()
 		 0.5f,  0.5f,  0.5f,	//right right lower
 		 0.5f, -0.5f, -0.5f,	//right left upper
 		 0.5f,  0.5f, -0.5f,	//right right upper
-		-0.5f,  0.5f,  0.5f,	//left left lower
-		-0.5f, -0.5f,  0.5f,	//left right lower
-		-0.5f,  0.5f, -0.5f,	//left left upper
-		-0.5f, -0.5f, -0.5f,	//left right upper
 		 0.5f,  0.5f,  0.5f,	//back left lower
 		-0.5f,  0.5f,  0.5f,	//back right lower
 		 0.5f,  0.5f, -0.5f,	//back left upper
-		-0.5f,  0.5f, -0.5f		//back right upper
+		-0.5f,  0.5f, -0.5f,	//back right upper
+		-0.5f,  0.5f,  0.5f,	//left left lower
+		-0.5f, -0.5f,  0.5f,	//left right lower
+		-0.5f,  0.5f, -0.5f,	//left left upper
+		-0.5f, -0.5f, -0.5f		//left right upper		
 	};
 	//テクスチャ座標(vector2)	※Clear画像のためにわざと左右も反転
 	float texCoord[] = {
