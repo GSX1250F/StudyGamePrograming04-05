@@ -34,19 +34,13 @@ public:
 	void SetPosition(const Vector3& pos) { mPosition = pos; mRecomputeWorldTransform = true; }
 	// Šg‘å—¦i¿—Ê‚Í•Ï‚¦‚È‚¢B”¼Œa‚É‰e‹¿‚·‚éj
 	float GetScale() const { return mScale; }
-	void SetScale(float scale) {
-		mScale = scale; mRecomputeWorldTransform = true;
-	}
+	void SetScale(float scale) { mScale = scale; mRecomputeWorldTransform = true; }
 	// ‰ñ“]
 	const float& GetRotation() const { return mRotation; }
-	void SetRotation(const float& rotation) {
-		mRotation = rotation; mRecomputeWorldTransform = true;
-	}
+	void SetRotation(const float& rotation) { mRotation = rotation; mRecomputeWorldTransform = true; }
 	// ”¼Œa
 	float GetRadius() const { return mRadius * mScale; }	//Šg‘å—¦‚ğl—¶
-	void SetRadius(float radius) {
-		mRadius = radius; mRecomputeWorldTransform = true;
-	}
+	void SetRadius(float radius) { mRadius = radius; mRecomputeWorldTransform = true; }
 
 	// Œü‚«‚Ì’PˆÊƒxƒNƒgƒ‹
 	Vector3 GetForward() const { return Vector3(Math::Cos(mRotation), Math::Sin(mRotation), 0.0f); }

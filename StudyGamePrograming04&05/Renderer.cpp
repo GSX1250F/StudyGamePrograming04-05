@@ -117,7 +117,7 @@ void Renderer::Draw()
 	mVertexInfo->SetActive();
 	mShader->SetActive();
 
-	mShader->SetMatrixUniform("uViewProj", mView * mProjection);
+	mShader->SetMatrixUniform("uViewProj", mView * mProj);
 
 	for (auto sprite : mSprites)
 	{
@@ -263,8 +263,8 @@ bool Renderer::LoadShaders()
 	// ビュー射影変換行列を作成。
 	// Set the view-projection matrix
 	mView = Matrix4::CreateLookAt(Vector3::Zero, Vector3::UnitX, Vector3::UnitZ);
-	mProjection = Matrix4::CreatePerspectiveFOV(Math::Pi*0.5, mScreenWidth, mScreenHeight, 0.01f, 5000.0f);
-	mShader->SetMatrixUniform("uViewProj", mView * mProjection);
+	mProj = Matrix4::CreatePerspectiveFOV(Math::Pi*0.5, mScreenWidth, mScreenHeight, 0.01f, 5000.0f);
+	mShader->SetMatrixUniform("uViewProj", mView * mProj);
 
 	return true;
 }

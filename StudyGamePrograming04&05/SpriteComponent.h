@@ -8,7 +8,6 @@ public:
 	SpriteComponent(class Actor* owner, int drawOrder = 100);
 	~SpriteComponent();
 
-	//virtual void Draw(SDL_Renderer* renderer);		// •ÏX
 	virtual void Draw(class Shader* shader);
 
 	virtual void SetTexture(class Texture* texture);

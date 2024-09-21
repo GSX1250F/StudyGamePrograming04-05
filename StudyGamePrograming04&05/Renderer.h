@@ -5,6 +5,7 @@
 #include <SDL.h>
 #include "Math.h"
 #include "Texture.h"
+#include "VertexInfo.h"
 
 class Renderer
 {
@@ -22,6 +23,7 @@ public:
 	void RemoveSprite(class SpriteComponent* sprite);
 
 	class Texture* GetTexture(const std::string& fileName);
+	class VertexInfo* GetVertexInfo() { return mVertexInfo; }
 
 	void SetViewMatrix(const Matrix4& view) { mView = view; }
 
@@ -53,7 +55,7 @@ private:
 	class Shader* mShader;
 	// View/projection for 3D shaders
 	Matrix4 mView;
-	Matrix4 mProjection;
+	Matrix4 mProj;
 
 	// Width/height of screen
 	float mScreenWidth;

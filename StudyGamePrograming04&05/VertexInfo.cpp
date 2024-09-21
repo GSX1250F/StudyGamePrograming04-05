@@ -2,8 +2,8 @@
 #include <glew.h>
 
 VertexInfo::VertexInfo(const float* vertPos, const float* texCoord,
-	const float* vertColor, const unsigned int* indices,
-	unsigned int numVerts, unsigned int numIndices)
+					   const float* vertColor, const unsigned int* indices,
+					   unsigned int numVerts, unsigned int numIndices)
 	: mNumVerts(numVerts), mNumIndices(numIndices)
 {
 	// バーテックス配列オブジェクトをOpenGLに生成し、そのIDをメンバー変数mVertexArrayに保存する
