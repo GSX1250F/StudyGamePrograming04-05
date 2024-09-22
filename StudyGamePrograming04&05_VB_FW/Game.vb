@@ -1,5 +1,4 @@
 ﻿Imports System.Media
-Imports System.Net.Mime.MediaTypeNames
 Imports System.Runtime.InteropServices
 Imports System.Windows.Forms.VisualStyles.VisualStyleElement.TrayNotify
 Imports OpenTK
@@ -28,9 +27,7 @@ Public Class Game
     End Sub
     Public Function Initialize() As Boolean
         'ウィンドウ初期化
-
         Me.SetBounds(100, 100, mWindowWidth + 26, mWindowHeight + 49)
-        'Me.DoubleBuffered = True
 
         'glControl初期化
         glControl.SetBounds(5, 5, mWindowWidth, mWindowHeight)
@@ -166,8 +163,8 @@ Public Class Game
         Me.Close()
     End Sub
     Private Sub LoadData()
-        'mMaze = New Maze(Me, 51, 29)        '迷路クラス
-        mMaze = New Maze(Me, 7, 7)        'テスト用
+        mMaze = New Maze(Me, 51, 29)        '迷路クラス
+        'mMaze = New Maze(Me, 7, 7)        'テスト用
     End Sub
     Private Sub UnloadData()
         While mActors.Count > 0

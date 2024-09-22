@@ -32,8 +32,6 @@ Public Class Renderer
 
 		' 背景色の設定
 		GL.ClearColor(0.3, 0.3, 0.3, 1.0)
-		' 深度テスト有効化
-		GL.Enable(EnableCap.DepthTest)
 
 		'ビュー変換の初期化
 		GL.MatrixMode(MatrixMode.Modelview)
@@ -64,6 +62,8 @@ Public Class Renderer
 		'アルファブレンディング
 		GL.Enable(EnableCap.Blend)
 		GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha)
+		' 深度有効化
+		GL.Enable(EnableCap.DepthTest)
 
 		'すべてのスプライトコンポーネントを描画
 		For Each sprite In mSprites
@@ -136,7 +136,7 @@ Public Class Renderer
 	Public Sub SetViewMatrix(ByRef matrix As Matrix4)
 		mView = matrix
 	End Sub
-	Public Sub SetProjectionMatrix(ByRef matrix As Matrix4)
+	Public Sub SetProjMatrix(ByRef matrix As Matrix4)
 		mProj = matrix
 	End Sub
 

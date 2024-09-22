@@ -28,40 +28,40 @@ Public Class SpriteComponent
     Public Overridable Sub Draw()
         If (mTexture IsNot Nothing) And (mVisible = True) Then
             Dim vertices = New List(Of Vector3) From {
+                New Vector3(-0.5, -0.5, 0.5),       '前面左上
                 New Vector3(-0.5, -0.5, -0.5),      '前面左下                
                 New Vector3(0.5, -0.5, -0.5),       '前面右下
-                New Vector3(-0.5, -0.5, 0.5),       '前面左上
                 New Vector3(0.5, -0.5, 0.5),        '前面右上
+                New Vector3(0.5, -0.5, 0.5),        '右面左上
                 New Vector3(0.5, -0.5, -0.5),       '右面左下
                 New Vector3(0.5, 0.5, -0.5),        '右面右下
-                New Vector3(0.5, -0.5, 0.5),        '右面左上
                 New Vector3(0.5, 0.5, 0.5),         '右面右上
+                New Vector3(0.5, 0.5, 0.5),         '後面左上
                 New Vector3(0.5, 0.5, -0.5),        '後面左下
                 New Vector3(-0.5, 0.5, -0.5),       '後面右下
-                New Vector3(0.5, 0.5, 0.5),         '後面左上
                 New Vector3(-0.5, 0.5, 0.5),        '後面右上
+                New Vector3(-0.5, 0.5, 0.5),        '左面左上
                 New Vector3(-0.5, 0.5, -0.5),       '左面左下
                 New Vector3(-0.5, -0.5, -0.5),      '左面右下
-                New Vector3(-0.5, 0.5, 0.5),        '左面左上
                 New Vector3(-0.5, -0.5, 0.5)        '左面右上
             }
             'テクスチャ座標　※Clear画像のためにわざと左右反転
             Dim texcoords = New List(Of Vector2) From {
+                    New Vector2(1.0, 1.0),      '左上
                     New Vector2(1.0, 0.0),      '左下
                     New Vector2(0.0, 0.0),      '右下
-                    New Vector2(1.0, 1.0),      '左上
                     New Vector2(0.0, 1.0),      '右上
+                    New Vector2(1.0, 1.0),      '左上
                     New Vector2(1.0, 0.0),      '左下
                     New Vector2(0.0, 0.0),      '右下
-                    New Vector2(1.0, 1.0),      '左上
                     New Vector2(0.0, 1.0),      '右上
+                    New Vector2(1.0, 1.0),      '左上
                     New Vector2(1.0, 0.0),      '左下
                     New Vector2(0.0, 0.0),      '右下
-                    New Vector2(1.0, 1.0),      '左上
                     New Vector2(0.0, 1.0),      '右上
+                    New Vector2(1.0, 1.0),      '左上
                     New Vector2(1.0, 0.0),      '左下
                     New Vector2(0.0, 0.0),      '右下
-                    New Vector2(1.0, 1.0),      '左上
                     New Vector2(0.0, 1.0)       '右上
             }
 
@@ -69,11 +69,11 @@ Public Class SpriteComponent
             mTexture.SetActive()
 
             ' テクスチャサイズで再スケーリングしたワールド変換行列を作成
-            Dim world As Matrix4 = Matrix4.CreateScale(mTexture.GetTexWidth, mTexture.GetTexHeight(), (mTexture.GetTexWidth + mTexture.GetTexHeight()) / 2)
+            Dim world = Matrix4.CreateScale(mTexWidth, mTexHeight, mTexWidth)
             world *= mOwner.GetWorldTransform()
 
             '短形を描画
-            GL.Begin(PrimitiveType.TriangleStrip)
+            GL.Begin(PrimitiveType.Quads)
             ' 各頂点を行列で変換
             For i = 0 To vertices.Count - 1
                 Dim v = New Vector4(vertices(i), 1.0)
