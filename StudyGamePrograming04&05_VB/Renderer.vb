@@ -33,7 +33,11 @@ Public Class Renderer
     Public Function Initialize(ByVal screenWidth As Integer, ByVal screenHeight As Integer) As Boolean
         mScreenWidth = screenWidth
         mScreenHeight = screenHeight
-        ' 画面初期化
+
+        ' 画面クリアの色を設定
+        GL.ClearColor(0.3, 0.3, 0.3, 1.0)
+
+        ' ビューポート設定
         GL.Viewport(0, 0, screenWidth, screenHeight)
 
         ' 頂点情報オブジェクトの生成
@@ -133,37 +137,37 @@ Public Class Renderer
         Return mScreenHeight
     End Function
 
-    Public Sub SetViewMatrix(ByRef view As Matrix4)
-        mView = view
+    Public Sub SetViewMatrix(ByRef matrix As Matrix4)
+        mView = matrix
     End Sub
-
+    Public Sub SetProjMatrix(ByRef matrix As Matrix4)
+        mProj = matrix
+    End Sub
 
     'private
     Private Sub CreateVertexInfo()
-        Dim numVerts As Integer = 16
         '頂点座標(vector3)
+        Dim numVerts As Integer = 16
         Dim vertPos As Single() = {
-             -0.5, -0.5, 0.5,
-              0.5, -0.5, 0.5,
              -0.5, -0.5, -0.5,
               0.5, -0.5, -0.5,
+             -0.5, -0.5, 0.5,
               0.5, -0.5, 0.5,
-              0.5, 0.5, 0.5,
               0.5, -0.5, -0.5,
               0.5, 0.5, -0.5,
+              0.5, -0.5, 0.5,
               0.5, 0.5, 0.5,
-             -0.5, 0.5, 0.5,
               0.5, 0.5, -0.5,
              -0.5, 0.5, -0.5,
+              0.5, 0.5, 0.5,
              -0.5, 0.5, 0.5,
-             -0.5, -0.5, 0.5,
              -0.5, 0.5, -0.5,
-             -0.5, -0.5, -0.5
+             -0.5, -0.5, -0.5,
+             -0.5, 0.5, 0.5,
+             -0.5, -0.5, 0.5
         }
         'テクスチャ座標(vector2)   ※Clear画像のためにわざと左右反転
         Dim texCoord As Single() = {
-              1.0, 1.0,
-              0.0, 1.0,
               1.0, 0.0,
               0.0, 0.0,
               1.0, 1.0,
@@ -177,7 +181,9 @@ Public Class Renderer
               1.0, 1.0,
               0.0, 1.0,
               1.0, 0.0,
-              0.0, 0.0
+              0.0, 0.0,
+              1.0, 1.0,
+              0.0, 1.0
         }
         '頂点カラー(vector4 RGBA)
         Dim vertColor As Single() = {
@@ -199,6 +205,7 @@ Public Class Renderer
               1.0, 1.0, 1.0, 1.0
         }
         'インデックス
+        Dim numIndices As Integer = 24
         Dim indices As UInteger() = {
               0, 1, 2,
               2, 1, 3,
@@ -209,7 +216,7 @@ Public Class Renderer
               12, 13, 14,
               14, 13, 15
         }
-        mVertexInfo = New VertexInfo(numVerts, vertPos, texCoord, vertColor, indices)
+        mVertexInfo = New VertexInfo(vertPos, texCoord, vertColor, indices, numVerts, numIndices)
     End Sub
     Private Function LoadShaders() As Boolean
         ' シェーダーを生成
@@ -218,7 +225,8 @@ Public Class Renderer
             Return False
         End If
         mShader.SetActive()
-        mView = Matrix4.LookAt(Vector3.Zero, Vector3.UnitX, Vector3.UnitZ)
+        'ビュー変換&射影変換行列の作成
+        mView = Matrix4.Identity
         mProj = Matrix4.CreatePerspectiveFieldOfView(MathHelper.Pi * 0.5, mScreenWidth / mScreenHeight, 0.01, 5000.0)
         mShader.SetMatrixUniform("uViewProj", mView * mProj)
 

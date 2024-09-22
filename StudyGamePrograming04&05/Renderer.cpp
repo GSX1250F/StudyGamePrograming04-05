@@ -178,8 +178,9 @@ class Texture* Renderer::GetTexture(const std::string& filename)
 
 void Renderer::CreateVertexInfo()
 {
-	int numVerts = 16;			//頂点の数
+	//左手座標系	
 	//頂点座標(vector3)
+	int numVerts = 16;			//頂点の数
 	float vertPos[] = {
 		-0.5f, -0.5f,  0.5f,	//front left lower
 		 0.5f, -0.5f,  0.5f,	//front right lower
@@ -235,9 +236,9 @@ void Renderer::CreateVertexInfo()
 		 0.0f, 1.0f, 0.0f, 1.0f,
 		 0.0f, 0.0f, 1.0f, 1.0f,
 		 1.0f, 1.0f, 1.0f, 1.0f
-	};
-	int numIndices = 24;			//インデックスの数
+	};	
 	//インデックス
+	int numIndices = 24;			//インデックスの数
 	unsigned int indices[] = {
 		 0, 1, 2,
 		 2, 1, 3,
@@ -262,7 +263,7 @@ bool Renderer::LoadShaders()
 	}
 	mShader->SetActive();
 	// ビュー変換と射影変換行列を作成。
-	mView = Matrix4::CreateLookAt(Vector3::Zero, Vector3::UnitX, Vector3::UnitZ);
+	mView = Matrix4::Identity;
 	mProj = Matrix4::CreatePerspectiveFOV(Math::Pi*0.5, mScreenWidth, mScreenHeight, 0.01f, 5000.0f);
 	mShader->SetMatrixUniform("uViewProj", mView * mProj);
 

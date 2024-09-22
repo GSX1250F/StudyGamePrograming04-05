@@ -7,10 +7,11 @@ Public Class VertexInfo
     Implements IDisposable      '明示的にクラスを開放するために必要
 
     'public
-    Public Sub New(ByVal numVerts As Integer, ByRef vertPos As Single(),
-                   ByRef texCoord As Single(), ByRef vertColor As Single(),
-                   ByRef indices As UInteger())
+    Public Sub New(ByRef vertPos As Single(), ByRef texCoord As Single(),
+                   ByRef vertColor As Single(), ByRef indices As UInteger(),
+                   ByVal numVerts As Integer, ByVal numIndices As Integer)
         mNumVerts = numVerts
+        mNumIndices = numIndices
 
         mVertexArray = GL.GenVertexArray()
         GL.BindVertexArray(mVertexArray)
@@ -101,6 +102,7 @@ Public Class VertexInfo
     'private
     Private disposedValue As Boolean
     Private mNumVerts As Integer         ' 頂点の数
+    Private mNumIndices As Integer          ' インデックスの数
     Private mVertexArray As Integer         ' バーテックス配列オブジェクトのOpenGL ID
     Private mIndexBuffer As Integer         ' インデックスバッファのOpenGL ID
     Private mVertPosBuffer As Integer        ' 頂点座標バッファのOpenGL ID
