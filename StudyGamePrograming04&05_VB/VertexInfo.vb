@@ -19,52 +19,55 @@ Public Class VertexInfo
         mIndexBuffer = GL.GenBuffer()
         GL.BindBuffer(BufferTarget.ElementArrayBuffer, mIndexBuffer)
         GL.BufferData(BufferTarget.ElementArrayBuffer,
-                      indices.Length * Marshal.SizeOf(Of UInteger),
+                      mNumIndices * Marshal.SizeOf(Of UInteger),
                       indices,
                       BufferUsageHint.StaticDraw)
 
         'VertexAttribute layout0 = position
+        Dim cnt As Integer = 3      '要素数
         mVertPosBuffer = GL.GenBuffer()
         GL.BindBuffer(BufferTarget.ArrayBuffer, mVertPosBuffer)
         GL.BufferData(BufferTarget.ArrayBuffer,
-                      vertPos.Length * Marshal.SizeOf(Of Single),
+                      cnt * mNumVerts * Marshal.SizeOf(Of Single),
                       vertPos,
                       BufferUsageHint.StaticDraw)
         GL.VertexAttribPointer(0,
-                               3,
+                               cnt,
                                VertexAttribPointerType.Float,
                                False,
-                               CInt(vertPos.Length / numVerts) * Marshal.SizeOf(Of Single),
+                               cnt * Marshal.SizeOf(Of Single),
                                0)
         GL.EnableVertexAttribArray(0)
 
         'VertexAttribute layout1 = texCoord
+        cnt = 2
         mTexCoordBuffer = GL.GenBuffer()
         GL.BindBuffer(BufferTarget.ArrayBuffer, mTexCoordBuffer)
         GL.BufferData(BufferTarget.ArrayBuffer,
-                      texCoord.Length * Marshal.SizeOf(Of Single),
+                      cnt * mNumVerts * Marshal.SizeOf(Of Single),
                       texCoord,
                       BufferUsageHint.StaticDraw)
         GL.VertexAttribPointer(1,
-                               2,
+                               cnt,
                                VertexAttribPointerType.Float,
                                False,
-                               CInt(texCoord.Length / numVerts) * Marshal.SizeOf(Of Single),
+                               cnt * Marshal.SizeOf(Of Single),
                                0)
         GL.EnableVertexAttribArray(1)
 
         'VertexAttribute layout2 = vertColor
+        cnt = 4
         mVertColorBuffer = GL.GenBuffer()
         GL.BindBuffer(BufferTarget.ArrayBuffer, mVertColorBuffer)
         GL.BufferData(BufferTarget.ArrayBuffer,
-                      vertColor.Length * Marshal.SizeOf(Of Single),
+                      cnt * mNumVerts * Marshal.SizeOf(Of Single),
                       vertColor,
                       BufferUsageHint.StaticDraw)
         GL.VertexAttribPointer(2,
-                               4,
+                               cnt,
                                VertexAttribPointerType.Float,
                                False,
-                               CInt(vertColor.Length / numVerts) * Marshal.SizeOf(Of Single),
+                               cnt * Marshal.SizeOf(Of Single),
                                0)
         GL.EnableVertexAttribArray(2)
 

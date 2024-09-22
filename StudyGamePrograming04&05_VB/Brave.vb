@@ -59,9 +59,9 @@ Public Class Brave
 		Next
 
 		Dim cameraPos As Vector3 = GetPosition()
-		Dim target As Vector3 = GetPosition() + GetForward() * 300.0
-		Dim up As Vector3 = Vector3.UnitZ
-		Dim view = Matrix4.LookAt(cameraPos, target, up)
+		Dim cameraTarget As Vector3 = GetPosition() + GetForward() * 300.0
+		Dim cameraUp As Vector3 = Vector3.UnitZ
+		Dim view = Matrix4.LookAt(cameraPos, cameraTarget, cameraUp)
 		GetGame().GetRenderer().SetViewMatrix(view)
 
 	End Sub

@@ -29,8 +29,8 @@ Public Class SpriteComponent
     Public Overridable Sub Draw(ByRef shader As Shader)
         If (mTexture IsNot Nothing) And (mVisible = True) Then
             ' テクスチャサイズで再スケーリングしたワールド変換行列を作成
-            Dim scaleMat As Matrix4 = Matrix4.CreateScale(mTexture.GetTexWidth)
-            Dim world As Matrix4 = scaleMat * mOwner.GetWorldTransform()
+            Dim world = Matrix4.CreateScale(mTexWidth, mTexHeight, mTexWidth)
+            world *= mOwner.GetWorldTransform()
             ' ワールド変換
             shader.SetMatrixUniform("uWorldTransform", world)
 
