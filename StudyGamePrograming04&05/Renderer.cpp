@@ -101,8 +101,7 @@ void Renderer::Shutdown()
 
 void Renderer::Draw()
 {
-	// 背景色を指定して画面をクリア & 深度バッファをクリア
-	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
+	// 画面をクリア & 深度バッファをクリア
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	// カラーバッファのアルファブレンディングを有効化
 	glEnable(GL_BLEND);
@@ -116,7 +115,8 @@ void Renderer::Draw()
 	// シェーダーとバーテックス配列オブジェクトを有効化
 	mVertexInfo->SetActive();
 	mShader->SetActive();
-
+	
+	// シェーダーのビュー変換&射影変換行列を更新
 	mShader->SetMatrixUniform("uViewProj", mView * mProj);
 
 	for (auto sprite : mSprites)
@@ -178,6 +178,7 @@ class Texture* Renderer::GetTexture(const std::string& filename)
 
 void Renderer::CreateVertexInfo()
 {
+	int numVerts = 16;			//頂点の数
 	//頂点座標(vector3)
 	float vertPos[] = {
 		-0.5f, -0.5f,  0.5f,	//front left lower
@@ -235,7 +236,7 @@ void Renderer::CreateVertexInfo()
 		 0.0f, 0.0f, 1.0f, 1.0f,
 		 1.0f, 1.0f, 1.0f, 1.0f
 	};
-
+	int numIndices = 24;			//インデックスの数
 	//インデックス
 	unsigned int indices[] = {
 		 0, 1, 2,
@@ -248,7 +249,7 @@ void Renderer::CreateVertexInfo()
 		 14, 13, 15,
 	};
 
-	mVertexInfo = new VertexInfo(vertPos, texCoord, vertColor, indices, 16, 24);
+	mVertexInfo = new VertexInfo(vertPos, texCoord, vertColor, indices, numVerts, numIndices);
 }
 
 bool Renderer::LoadShaders()
@@ -260,8 +261,7 @@ bool Renderer::LoadShaders()
 		return false;
 	}
 	mShader->SetActive();
-	// ビュー射影変換行列を作成。
-	// Set the view-projection matrix
+	// ビュー変換と射影変換行列を作成。
 	mView = Matrix4::CreateLookAt(Vector3::Zero, Vector3::UnitX, Vector3::UnitZ);
 	mProj = Matrix4::CreatePerspectiveFOV(Math::Pi*0.5, mScreenWidth, mScreenHeight, 0.01f, 5000.0f);
 	mShader->SetMatrixUniform("uViewProj", mView * mProj);

@@ -44,6 +44,10 @@ Public Class Renderer
             Console.WriteLine("シェーダーの読み込みに失敗しました。")
             Return False
         End If
+
+        ' 画面クリアの色を設定
+        GL.ClearColor(0.3, 0.3, 0.3, 1.0)
+
         Return True
     End Function
     Public Sub Shutdown()
@@ -57,19 +61,19 @@ Public Class Renderer
         mTextures.Clear()
     End Sub
     Public Sub Draw()
-        '背景色を指定して画面をクリア
-        GL.ClearColor(0.3, 0.3, 0.3, 1.0)
+        '画面をクリア＆深度バッファをクリア
         GL.Clear(ClearBufferMask.ColorBufferBit Or ClearBufferMask.DepthBufferBit)
-        GL.Enable(EnableCap.DepthTest)
         'カラーバッファのアルファブレンディングを有効化
         GL.Enable(EnableCap.Blend)
         GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha)
+        '深度有効化
+        GL.Enable(EnableCap.DepthTest)
 
         ' シェーダーとバーテックス配列オブジェクトを有効化
         mVertexInfo.SetActive()
         mShader.SetActive()
 
-        mShader.SetMatrixUniform("uViewProj", mView * mProjection)
+        mShader.SetMatrixUniform("uViewProj", mView * mProj)
 
         'すべてのスプライトコンポーネントを描画
         For Each sprite In mSprites
@@ -147,14 +151,14 @@ Public Class Renderer
               0.5, 0.5, 0.5,
               0.5, -0.5, -0.5,
               0.5, 0.5, -0.5,
-             -0.5, 0.5, 0.5,
-             -0.5, -0.5, 0.5,
-             -0.5, 0.5, -0.5,
-             -0.5, -0.5, -0.5,
               0.5, 0.5, 0.5,
              -0.5, 0.5, 0.5,
               0.5, 0.5, -0.5,
-             -0.5, 0.5, -0.5
+             -0.5, 0.5, -0.5,
+             -0.5, 0.5, 0.5,
+             -0.5, -0.5, 0.5,
+             -0.5, 0.5, -0.5,
+             -0.5, -0.5, -0.5
         }
         'テクスチャ座標(vector2)   ※Clear画像のためにわざと左右反転
         Dim texCoord As Single() = {
@@ -215,8 +219,8 @@ Public Class Renderer
         End If
         mShader.SetActive()
         mView = Matrix4.LookAt(Vector3.Zero, Vector3.UnitX, Vector3.UnitZ)
-        mProjection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.Pi * 0.5, mScreenWidth / mScreenHeight, 0.01, 5000.0)
-        mShader.SetMatrixUniform("uViewProj", mView * mProjection)
+        mProj = Matrix4.CreatePerspectiveFieldOfView(MathHelper.Pi * 0.5, mScreenWidth / mScreenHeight, 0.01, 5000.0)
+        mShader.SetMatrixUniform("uViewProj", mView * mProj)
 
         Return True
     End Function
@@ -229,5 +233,5 @@ Public Class Renderer
     Private mVertexInfo As VertexInfo
     Private mShader As Shader
     Private mView As Matrix4
-    Private mProjection As Matrix4
+    Private mProj As Matrix4
 End Class

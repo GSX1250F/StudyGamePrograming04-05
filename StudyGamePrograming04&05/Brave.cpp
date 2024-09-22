@@ -79,11 +79,8 @@ void Brave::UpdateActor(float deltaTime){
 		Vector3 cameraPos = GetPosition();
 		Vector3 target = GetPosition() + GetForward() * 300.0f;
 		Vector3 up = -1.0 * Vector3::UnitZ;
-
+		
 		Matrix4 view = Matrix4::CreateLookAt(cameraPos, target, up);
 		GetGame()->GetRenderer()->SetViewMatrix(view);
-
-
-
 	}	
 }

@@ -26,17 +26,17 @@ VertexInfo::VertexInfo(const float* vertPos, const float* texCoord,
 	glBindBuffer(GL_ARRAY_BUFFER, mVertPosBuffer);
 	glBufferData(
 		GL_ARRAY_BUFFER,							// バッファの種類にバーテックスバッファを指定
-		cnt * mNumVerts * sizeof(float),		// コピーするバイト数
+		cnt * mNumVerts * sizeof(float),			// コピーするバイト数
 		vertPos,									// コピー元の配列
 		GL_STATIC_DRAW								// このデータを1回だけロードしてその後頻繁に使うとき
 	);
 	glVertexAttribPointer(
-		0,									// 属性インデックス（１つ目はゼロ）
-		cnt,									// 要素数
-		GL_FLOAT,							// 要素の型
-		GL_FALSE,							// 整数型のみ使用する。
-		cnt * sizeof(float),					// ストライド（通常は各バーテックス属性のデータ数
-		0									// 頂点データの開始位置からこの属性までのオフセット
+		0,											// 属性インデックス（１つ目はゼロ）
+		cnt,										// 要素数
+		GL_FLOAT,									// 要素の型
+		GL_FALSE,									// 整数型のみ使用する。
+		cnt * sizeof(float),						// ストライド（通常は各バーテックス属性のデータ数
+		0											// 頂点データの開始位置からこの属性までのオフセット
 	);
 	glEnableVertexAttribArray(0);
 

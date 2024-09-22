@@ -25,7 +25,8 @@ public:
 	class Texture* GetTexture(const std::string& fileName);
 	class VertexInfo* GetVertexInfo() { return mVertexInfo; }
 
-	void SetViewMatrix(const Matrix4& view) { mView = view; }
+	void SetViewMatrix(const Matrix4& matrix) { mView = matrix; }
+	void SetProjMatrix(const Matrix4& matrix) { mProj = matrix; }
 
 	float GetScreenWidth() const { return mScreenWidth; }
 	float GetScreenHeight() const { return mScreenHeight; }
