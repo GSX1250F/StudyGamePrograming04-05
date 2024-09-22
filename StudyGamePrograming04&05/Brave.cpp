@@ -77,10 +77,10 @@ void Brave::UpdateActor(float deltaTime){
 
 		// Compute new camera from this actor
 		Vector3 cameraPos = GetPosition();
-		Vector3 target = GetPosition() + GetForward() * 300.0f;
-		Vector3 up = -1.0 * Vector3::UnitZ;
+		Vector3 cameraTarget = GetPosition() + GetForward() * 300.0f;
+		Vector3 cameraUp = -1.0 * Vector3::UnitZ;
 		
-		Matrix4 view = Matrix4::CreateLookAt(cameraPos, target, up);
+		Matrix4 view = Matrix4::CreateLookAt(cameraPos, cameraTarget, cameraUp);
 		GetGame()->GetRenderer()->SetViewMatrix(view);
 	}	
 }

@@ -13,7 +13,8 @@ out vec4 fragVertColor;
 
 void main()
 {
-	gl_Position = vec4(inVertPos, 1.0) * uWorldTransform * uViewProj;
+	vec4 pos = vec4(inVertPos, 1.0);
+	gl_Position = pos * uWorldTransform * uViewProj;
 	fragTexCoord = inTexCoord;
 	fragVertColor = inVertColor;
 }

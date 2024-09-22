@@ -182,72 +182,73 @@ void Renderer::CreateVertexInfo()
 	//頂点座標(vector3)
 	int numVerts = 16;			//頂点の数
 	float vertPos[] = {
+		-0.5f, -0.5f, -0.5f,	//front left upper
 		-0.5f, -0.5f,  0.5f,	//front left lower
 		 0.5f, -0.5f,  0.5f,	//front right lower
-		-0.5f, -0.5f, -0.5f,	//front left upper
 		 0.5f, -0.5f, -0.5f,	//front right upper
+		 0.5f, -0.5f, -0.5f,	//right left upper
 		 0.5f, -0.5f,  0.5f,	//right left lower
 		 0.5f,  0.5f,  0.5f,	//right right lower
-		 0.5f, -0.5f, -0.5f,	//right left upper
 		 0.5f,  0.5f, -0.5f,	//right right upper
+		 0.5f,  0.5f, -0.5f,	//back left upper
 		 0.5f,  0.5f,  0.5f,	//back left lower
 		-0.5f,  0.5f,  0.5f,	//back right lower
-		 0.5f,  0.5f, -0.5f,	//back left upper
 		-0.5f,  0.5f, -0.5f,	//back right upper
+		-0.5f,  0.5f, -0.5f,	//left left upper
 		-0.5f,  0.5f,  0.5f,	//left left lower
 		-0.5f, -0.5f,  0.5f,	//left right lower
-		-0.5f,  0.5f, -0.5f,	//left left upper
 		-0.5f, -0.5f, -0.5f		//left right upper		
 	};
+	
 	//テクスチャ座標(vector2)	※Clear画像のためにわざと左右も反転
 	float texCoord[] = {
+		 1.0f, 0.0f,
 		 1.0f, 1.0f,
 		 0.0f, 1.0f,
-		 1.0f, 0.0f,
 		 0.0f, 0.0f,
+		 1.0f, 0.0f,
 		 1.0f, 1.0f,
 		 0.0f, 1.0f,
-		 1.0f, 0.0f,
 		 0.0f, 0.0f,
+		 1.0f, 0.0f,
 		 1.0f, 1.0f,
 		 0.0f, 1.0f,
-		 1.0f, 0.0f,
 		 0.0f, 0.0f,
+		 1.0f, 0.0f,
 		 1.0f, 1.0f,
 		 0.0f, 1.0f,
-		 1.0f, 0.0f,
 		 0.0f, 0.0f
 	};
 	//頂点カラー(vector4 RGBA)
 	float vertColor[] = {
-		 1.0f, 0.0f, 0.0f, 1.0f,
-		 0.0f, 1.0f, 0.0f, 1.0f,
-		 0.0f, 0.0f, 1.0f, 1.0f,
-		 1.0f, 1.0f, 1.0f, 1.0f,
-		 1.0f, 0.0f, 0.0f, 1.0f,
-		 0.0f, 1.0f, 0.0f, 1.0f,
-		 0.0f, 0.0f, 1.0f, 1.0f,
-		 1.0f, 1.0f, 1.0f, 1.0f,
-		 1.0f, 0.0f, 0.0f, 1.0f,
-		 0.0f, 1.0f, 0.0f, 1.0f,
-		 0.0f, 0.0f, 1.0f, 1.0f,
-		 1.0f, 1.0f, 1.0f, 1.0f,
-		 1.0f, 0.0f, 0.0f, 1.0f,
-		 0.0f, 1.0f, 0.0f, 1.0f,
-		 0.0f, 0.0f, 1.0f, 1.0f,
-		 1.0f, 1.0f, 1.0f, 1.0f
-	};	
+		 0.5f, 0.5f, 1.0f, 1.0f,	//頂点0=頂点15
+		 0.5f, 0.5f, 0.5f, 1.0f,	//頂点1=頂点14
+		 1.0f, 0.5f, 0.5f, 1.0f,	//頂点2=頂点5
+		 1.0f, 0.5f, 1.0f, 1.0f,	//頂点3=頂点4
+		 1.0f, 0.5f, 1.0f, 1.0f,	//頂点4=頂点3
+		 1.0f, 0.5f, 0.5f, 1.0f,	//頂点5=頂点2
+		 1.0f, 1.0f, 0.5f, 1.0f,	//頂点6=頂点9
+		 1.0f, 1.0f, 1.0f, 1.0f,	//頂点7=頂点8
+		 1.0f, 1.0f, 1.0f, 1.0f,	//頂点8=頂点7
+		 1.0f, 1.0f, 0.5f, 1.0f,	//頂点9=頂点6
+		 0.5f, 1.0f, 0.5f, 1.0f,	//頂点10=頂点13
+		 0.5f, 1.0f, 1.0f, 1.0f,	//頂点11=頂点12
+		 0.5f, 1.0f, 1.0f, 1.0f,	//頂点12=頂点11
+		 0.5f, 1.0f, 0.5f, 1.0f,	//頂点13=頂点10
+		 0.5f, 0.5f, 0.5f, 1.0f,	//頂点14=頂点1
+		 0.5f, 0.5f, 1.0f, 1.0f,	//頂点15=頂点0
+	};
 	//インデックス
 	int numIndices = 24;			//インデックスの数
 	unsigned int indices[] = {
 		 0, 1, 2,
-		 2, 1, 3,
+		 2, 3, 0,
 		 4, 5, 6,
-		 6, 5, 7,
+		 6, 7, 4,
 		 8, 9, 10,
-		 10, 9, 11,
+		 10, 11, 8,
 		 12, 13, 14,
-		 14, 13, 15,
+		 14, 15, 12,
 	};
 
 	mVertexInfo = new VertexInfo(vertPos, texCoord, vertColor, indices, numVerts, numIndices);
