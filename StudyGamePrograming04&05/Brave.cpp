@@ -30,7 +30,7 @@ void Brave::ActorInput(const SDL_Event& event){
 		float forwardSpeed = 0.0f;
 		float angularSpeed = 0.0f;
 		if (event.type == SDL_KEYDOWN) {
-			if (event.key.keysym.sym == SDLK_UP)
+			if (event.key.keysym.sym == SDLK_UP || event.key.keysym.sym == SDLK_KP_8)
 			{
 				forwardSpeed = speed;
 			}
