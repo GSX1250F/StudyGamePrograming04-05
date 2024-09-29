@@ -266,6 +266,7 @@ bool Renderer::LoadShaders()
 	// ビュー変換と射影変換行列を作成。
 	mView = Matrix4::Identity;
 	mProj = Matrix4::CreatePerspectiveFOV(Math::Pi*0.5, mScreenWidth, mScreenHeight, 0.01f, 5000.0f);
+	//mProj = Matrix4::CreateOrtho(mScreenWidth, mScreenHeight, 0.01f, 5000.0f);
 	mShader->SetMatrixUniform("uViewProj", mView * mProj);
 
 	return true;
