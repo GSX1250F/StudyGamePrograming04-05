@@ -48,7 +48,7 @@ void Brave::ActorInput(const SDL_Event& event){
 			}
 		}
 		mc->SetVelocity(forwardSpeed * GetForward());
-		mc->SetRotSpeed(angularSpeed);		
+		mc->SetRotSpeed(angularSpeed * Vector3::UnitZ);	
 	}	
 }
 

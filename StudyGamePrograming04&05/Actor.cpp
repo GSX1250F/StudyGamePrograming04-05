@@ -7,7 +7,7 @@ Actor::Actor(Game* game)
 	:mState(EActive)
 	, mPosition(Vector3::Zero)
 	, mScale(1.0f)
-	, mRotation(0.0f)
+	, mRotation(Quaternion::Identity)
 	, mRadius(0.0f)
 	, mGame(game)
 	, mRecomputeWorldTransform(true)
@@ -95,7 +95,7 @@ void Actor::ComputeWorldTransform()
 		mRecomputeWorldTransform = false;
 		// スケーリング→回転→平行移動
 		mWorldTransform = Matrix4::CreateScale(mScale);
-		mWorldTransform *= Matrix4::CreateRotationZ(mRotation);
+		mWorldTransform *= Matrix4::CreateFromQuaternion(mRotation);
 		mWorldTransform *= Matrix4::CreateTranslation(mPosition);
 		for (auto comp : mComponents)
 		{
