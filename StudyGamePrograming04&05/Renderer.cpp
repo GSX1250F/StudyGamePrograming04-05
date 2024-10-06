@@ -2,8 +2,8 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <algorithm>
-#include "SpriteComponent.h"
 #include <glew.h>
+#include "SpriteComponent.h"
 #include "Shader.h"
 #include "VertexInfo.h"
 #include "Texture.h"
