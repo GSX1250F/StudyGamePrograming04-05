@@ -16,7 +16,8 @@ Public Class Actor
         mState = State.EActive
         mPosition = Vector3.Zero
         mScale = 1.0
-        mRotation = 0.0
+        'mRotation = 0.0
+        mRotation = Quaternion.Identity
         mRadius = 0.0
         mRecomputeWorldTransform = True
         mGame = game
@@ -87,10 +88,12 @@ Public Class Actor
         mScale = scale
         mRecomputeWorldTransform = True
     End Sub
-    Public Function GetRotation() As Double
+    Public Function GetRotation() As Quaternion
+        'Public Function GetRotation() As Double
         Return mRotation
     End Function
-    Public Sub SetRotation(ByRef rotation As Double)
+    Public Sub SetRotation(ByRef rotation As Quaternion)
+        'Public Sub SetRotation(ByRef rotation As Double)
         mRotation = rotation
         mRecomputeWorldTransform = True
     End Sub
@@ -102,8 +105,15 @@ Public Class Actor
         mRecomputeWorldTransform = True
     End Sub
     Public Function GetForward() As Vector3
-        Dim v = New Vector3(Math.Cos(mRotation), Math.Sin(mRotation), 0.0)
-        Return v
+        'Dim v = New Vector3(Math.Cos(mRotation), Math.Sin(mRotation), 0.0)
+        'Return v
+        Return Vector3.Transform(Vector3.UnitX, mRotation)
+    End Function
+    Public Function GetStrafe() As Vector3
+        Return Vector3.Transform(Vector3.UnitY, mRotation)
+    End Function
+    Public Function GetUpward() As Vector3
+        Return Vector3.Transform(-Vector3.UnitZ, mRotation)
     End Function
     Public Function GetState() As State
         Return mState
@@ -145,7 +155,8 @@ Public Class Actor
             mRecomputeWorldTransform = False
             'スケーリング→回転→平行移動
             mWorldTransform = Matrix4.CreateScale(mScale)
-            mWorldTransform *= Matrix4.CreateRotationZ(mRotation)
+            'mWorldTransform *= Matrix4.CreateRotationZ(mRotation)
+            mWorldTransform *= Matrix4.CreateFromQuaternion(mRotation)
             mWorldTransform *= Matrix4.CreateTranslation(mPosition)
         End If
     End Sub
@@ -154,7 +165,8 @@ Public Class Actor
     Private mState As State              ' アクターの状態
     Private mPosition As Vector3        '位置
     Private mScale As Double            '拡大率
-    Private mRotation As Double         '回転
+    'Private mRotation As Double         '回転
+    Private mRotation As Quaternion         '回転
     Private mRadius As Double           '半径（拡大率は無視）
     Private mComponents As New List(Of Component)   '各コンポーネントのリスト
     Private mGame As Game   'Gameクラスのメンバにアクセスするための変数
