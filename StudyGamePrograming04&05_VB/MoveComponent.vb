@@ -24,15 +24,13 @@ Public Class MoveComponent
         If (mRotSpeed.Length > 0) Then
             'mOwner.SetRotation(mOwner.GetRotation() + mRotSpeed * deltaTime)    ' Actorの方向を更新
             '向きを更新
-            Dim rot As Quaternion = mOwner.GetRotation()
             'クォータニオン生成。回転速度モーメントベクトルの大きさが角速度の大きさ
-            Dim axis As Vector3 = mRotSpeed
-            axis.Normalize()    '回転軸。正規化する。
+            Dim axis As Vector3 = Vector3.Normalize(mRotSpeed)
             Dim angle As Double = deltaTime * mRotSpeed.Length()    '角度変化量
             Dim inc = Quaternion.FromAxisAngle(axis, angle)
             'もとのrotと増分のクォータニオンを結合
-            rot = Quaternion.Multiply(rot, inc)
-            mOwner.SetRotation(rot)
+            mOwner.SetRotation(Quaternion.Multiply(mOwner.GetRotation(), inc))
+
         End If
 
         SetVelocity(mVelocity + GetMoveAccel() * deltaTime)     'v = v0 + at
