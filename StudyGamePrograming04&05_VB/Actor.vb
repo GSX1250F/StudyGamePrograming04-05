@@ -113,7 +113,7 @@ Public Class Actor
         Return Vector3.Transform(Vector3.UnitY, mRotation)
     End Function
     Public Function GetUpward() As Vector3
-        Return Vector3.Transform(-Vector3.UnitZ, mRotation)
+        Return Vector3.Transform(Vector3.UnitZ, mRotation)
     End Function
     Public Function GetState() As State
         Return mState
@@ -162,14 +162,16 @@ Public Class Actor
     End Sub
 
     'private
+    Private mGame As Game   'Gameクラスのメンバにアクセスするための変数
+    Private mComponents As New List(Of Component)   '各コンポーネントのリスト
+    Private mWorldTransform As Matrix4
+    Private mRecomputeWorldTransform As Boolean
+
     Private mState As State              ' アクターの状態
-    Private mPosition As Vector3        '位置
     Private mScale As Double            '拡大率
+    Private mRadius As Double           '半径（拡大率は無視）
+    Private mPosition As Vector3        '位置
     'Private mRotation As Double         '回転
     Private mRotation As Quaternion         '回転
-    Private mRadius As Double           '半径（拡大率は無視）
-    Private mComponents As New List(Of Component)   '各コンポーネントのリスト
-    Private mGame As Game   'Gameクラスのメンバにアクセスするための変数
-    Private mRecomputeWorldTransform As Boolean
-    Private mWorldTransform As Matrix4
+
 End Class

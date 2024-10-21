@@ -7,7 +7,6 @@
 #include "CircleComponent.h"
 #include "SpriteComponent.h"
 #include "SomeSpriteComponent.h"
-#include "NavComponent.h"
 #include <queue>
 #include <unordered_map>
 #include <algorithm>

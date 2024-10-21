@@ -227,6 +227,7 @@ Public Class Renderer
         mShader.SetActive()
         'ビュー変換&射影変換行列の作成
         mView = Matrix4.Identity
+        'mProj = Matrix4.CreateOrthographic(mScreenWidth, mScreenHeight, 0.01, 5000)
         mProj = Matrix4.CreatePerspectiveFieldOfView(MathHelper.Pi * 0.5, mScreenWidth / mScreenHeight, 0.01, 5000.0)
         mShader.SetMatrixUniform("uViewProj", mView * mProj)
 

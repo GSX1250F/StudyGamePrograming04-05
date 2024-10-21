@@ -20,7 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
-    <ClCompile Include="AnimSpriteComponent.cpp" />
     <ClCompile Include="Brave.cpp" />
     <ClCompile Include="CircleComponent.cpp" />
     <ClCompile Include="Component.cpp" />
@@ -30,11 +29,9 @@
     <ClCompile Include="Maze.cpp" />
     <ClCompile Include="MazeCreator.cpp" />
     <ClCompile Include="MoveComponent.cpp" />
-    <ClCompile Include="NavComponent.cpp" />
     <ClCompile Include="Random.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="SomeSpriteComponent.cpp" />
     <ClCompile Include="SpriteComponent.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Tile.cpp" />
@@ -43,7 +40,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
-    <ClInclude Include="AnimSpriteComponent.h" />
     <ClInclude Include="Brave.h" />
     <ClInclude Include="CircleComponent.h" />
     <ClInclude Include="ClearPict.h" />
@@ -53,12 +49,10 @@
     <ClInclude Include="Maze.h" />
     <ClInclude Include="MazeCreator.h" />
     <ClInclude Include="MoveComponent.h" />
-    <ClInclude Include="NavComponent.h" />
     <ClInclude Include="Random.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Shadow.h" />
-    <ClInclude Include="SomeSpriteComponent.h" />
     <ClInclude Include="SpriteComponent.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Tile.h" />

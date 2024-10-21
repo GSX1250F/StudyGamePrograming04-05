@@ -17,7 +17,7 @@ public:
 
 	void UpdateTexture();
 
-	class SomeSpriteComponent* GetSprite() { return ssc; }
+	class SpriteComponent* GetSprite() { return sc; }
 	class CircleComponent* GetCircle() { return cc; }
 	TileState GetTileState() { return mTileState; }
 	float GetTexSize() { return mTexSize; }
@@ -30,7 +30,7 @@ public:
 
 
 private:
-	class SomeSpriteComponent* ssc;
+	class SpriteComponent* sc;
 	class CircleComponent* cc;
 
 	TileState mTileState;

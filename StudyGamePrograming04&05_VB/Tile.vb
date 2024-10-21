@@ -13,14 +13,9 @@
         mTileState = TileState.EDefault
         mParent = Nothing
         'スプライトコンポーネントを作成
-        ssc = New SomeSpriteComponent(Me, 10)
-        Dim texfiles As New List(Of String) From {
-            "Assets/Default.png",
-            "Assets/Wall.png"
-        }
-        ssc.TextureFiles = texfiles
-        ssc.SetSomeTextures(ssc.TextureFiles)
-        mTexSize = ssc.GetTexWidth()
+        sc = New SpriteComponent(Me, 10)
+        sc.SetTexture(game.GetRenderer().GetTexture("Assets/Wall.png"))
+        mTexSize = sc.GetTexWidth()
 
         'CircleComponent作成
         cc = New CircleComponent(Me, 100)
@@ -31,13 +26,13 @@
     Public Sub UpdateTexture()
         Select Case mTileState
             Case TileState.EWall
-                ssc.SelectTexture(ssc.TextureFiles(1))
+                sc.SetVisible(True)
             Case Else
-                ssc.SelectTexture(ssc.TextureFiles(0))
+                sc.SetVisible(False)
         End Select
     End Sub
-    Public Function GetSprite() As SomeSpriteComponent
-        Return ssc
+    Public Function GetSprite() As SpriteComponent
+        Return sc
     End Function
     Public Function GetCircle() As CircleComponent
         Return cc
@@ -70,7 +65,7 @@
 
     Private mAdjacent As New List(Of Tile)
     Private mParent As Tile
-    Private ssc As SomeSpriteComponent
+    Private sc As SpriteComponent
     Private cc As CircleComponent
     Private mTileState As TileState
     Private mTexSize As Double

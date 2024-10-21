@@ -4,7 +4,7 @@
 #include <algorithm>
 
 Actor::Actor(Game* game)
-	:mState(EActive)
+	: mState(EActive)
 	, mPosition(Vector3::Zero)
 	, mScale(1.0f)
 	, mRotation(Quaternion::Identity)

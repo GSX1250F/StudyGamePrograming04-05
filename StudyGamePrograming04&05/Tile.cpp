@@ -1,5 +1,5 @@
 #include "Tile.h"
-#include "SomeSpriteComponent.h"
+#include "SpriteComponent.h"
 #include "Game.h"
 #include "Renderer.h"
 #include "CircleComponent.h"
@@ -10,13 +10,9 @@ Tile::Tile(class Game* game)
 	, mParent(nullptr)
 {
 	//スプライトコンポーネントを作成
-	ssc = new SomeSpriteComponent(this, 10);
-	ssc->TextureFiles = {
-		"Assets/Default.png",
-		"Assets/Wall.png"
-	};
-	ssc->SetSomeTextures(ssc->TextureFiles);
-	mTexSize = ssc->GetTexWidth();
+	sc = new SpriteComponent(this, 10);
+	sc->SetTexture(game->GetRenderer()->GetTexture("Assets/Wall.png"));
+	mTexSize = sc->GetTexWidth();
 	
 	//CircleComponent作成
 	cc = new CircleComponent(this);	
@@ -38,9 +34,9 @@ void Tile::UpdateTexture()
 	switch (mTileState)
 	{
 		case EWall:
-			ssc->SelectTexture(ssc->TextureFiles[1]);
+			sc->SetVisible(true);
 			break;
 		default:
-			ssc->SelectTexture(ssc->TextureFiles[0]);
+			sc->SetVisible(false);
 	}
 }

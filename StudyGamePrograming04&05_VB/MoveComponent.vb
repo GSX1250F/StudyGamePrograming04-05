@@ -26,31 +26,47 @@ Public Class MoveComponent
         Dim axis As Vector3 = mRotSpeed
         axis.Normalize()    '回転軸。正規化する。
         Dim angle As Double = deltaTime * mRotSpeed.Length()    '角度変化量
-        Dim inc = New Quaternion(axis, angle)
+        Dim inc = Quaternion.FromAxisAngle(axis, angle)
         'もとのrotと増分のクォータニオンを結合
-        rot = inc * rot
+        rot = Quaternion.Multiply(rot, inc)
         mOwner.SetRotation(rot)
 
         SetVelocity(mVelocity + GetMoveAccel() * deltaTime)     'v = v0 + at
         SetRotSpeed(mRotSpeed + GetRotAccel() * deltaTime)     'ω = ωo + bt
     End Sub
+    Public Sub SetMass(ByVal v As Double)
+        mMass = v
+    End Sub
+    Public Function GetImoment() As Double
+        ' 慣性モーメント計算　※※2次元においては、一様密度の円板とする。 I=0.5*質量*半径^2
+        Return 0.5 * mMass * mOwner.GetRadius() * mOwner.GetRadius()
+    End Function
+    Public Sub SetMoveResist(ByVal v As Double)
+        mMoveResist = v
+    End Sub
+    Public Sub SetRotResist(ByVal v As Double)
+        mRotResist = v
+    End Sub
 
     Public Sub SetVelocity(ByVal v)
         mVelocity = v
     End Sub
+    Public Function GetVelocity() As Vector3
+        Return mVelocity
+    End Function
     Public Sub SetRotSpeed(ByVal v As Vector3)
         'Public Sub SetRotSpeed(ByVal v As Double)
         mRotSpeed = v
     End Sub
+    Public Function GetRotSpeed() As Vector3
+        Return mRotSpeed
+    End Function
     Public Sub SetMoveForce(ByVal v As Vector3)
         mMoveForce = v
     End Sub
     Public Sub SetRotForce(ByVal v As Vector3)
         'Public Sub SetRotForce(ByVal v As Double)
         mRotForce = v
-    End Sub
-    Public Sub SetMass(ByVal v As Double)
-        mMass = v
     End Sub
     Public Function GetMoveAccel() As Vector3
         If mMass = 0 Then
@@ -61,10 +77,6 @@ Public Class MoveComponent
             accel -= mVelocity * mMoveResist * 0.01 * (1 / mMass)
             Return accel
         End If
-    End Function
-    Public Function GetImoment() As Double
-        ' 慣性モーメント計算　※※2次元においては、一様密度の円板とする。 I=0.5*質量*半径^2
-        Return 0.5 * mMass * mOwner.GetRadius() * mOwner.GetRadius()
     End Function
     Public Function GetTorque() As Vector3
         'Public Function GetTorque() As Double
@@ -78,18 +90,12 @@ Public Class MoveComponent
             Return Vector3.Zero
         Else
             '回転加速度の計算　回転加速度 = トルク / 慣性モーメント
-            Dim accel = GetTorque() / GetImoment()    '回転加速度の計算 Fr=Ia  a=Fr/I
+            Dim accel As Vector3 = GetTorque() / GetImoment()    '回転加速度の計算 Fr=Ia  a=Fr/I
             '抵抗力 = 速さ*抵抗係数    減速 = -速さ*抵抗係数*半径/慣性モーメント
             accel -= mRotSpeed * mOwner.GetRadius() * mRotResist / GetImoment()
             Return accel
         End If
     End Function
-    Public Sub SetMoveResist(ByVal v As Double)
-        mMoveResist = v
-    End Sub
-    Public Sub SetRotResist(ByVal v As Double)
-        mRotResist = v
-    End Sub
 
     'private
     Private mMass As Double      '質量
