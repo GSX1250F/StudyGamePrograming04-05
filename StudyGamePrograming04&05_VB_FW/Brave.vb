@@ -30,7 +30,7 @@ Public Class Brave
 				angularSpeed = -Math.PI
 			End If
 			mc.SetVelocity(forwardSpeed * GetForward())
-			mc.SetRotSpeed(angularSpeed)
+			mc.SetRotSpeed(angularSpeed * GetUpward())
 		End If
 	End Sub
 	Public Overrides Sub UpdateActor(ByVal deltaTime As Double)
@@ -57,7 +57,7 @@ Public Class Brave
 
 		Dim cameraPos As Vector3 = GetPosition()
 		Dim cameraTarget As Vector3 = GetPosition() + GetForward() * 300.0
-		Dim cameraUp As Vector3 = Vector3.UnitZ
+		Dim cameraUp As Vector3 = GetUpward()
 		Dim view = Matrix4.LookAt(cameraPos, cameraTarget, cameraUp)
 		GetGame().GetRenderer().SetViewMatrix(view)
 

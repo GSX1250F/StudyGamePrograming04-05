@@ -111,9 +111,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="NavComponent.vb" />
     <Compile Include="Renderer.vb" />
-    <Compile Include="SomeSpriteComponent.vb" />
     <Compile Include="SpriteComponent.vb" />
     <Compile Include="Texture.vb" />
     <Compile Include="Tile.vb" />
