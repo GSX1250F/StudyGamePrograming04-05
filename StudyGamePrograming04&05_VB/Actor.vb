@@ -59,7 +59,6 @@ Public Class Actor
             comp.Update(deltaTime)
         Next
     End Sub
-
     Public Overridable Sub UpdateActor(ByVal deltaTime As Double)
     End Sub
     Public Sub ProcessInput(ByVal keyState As KeyboardState)
