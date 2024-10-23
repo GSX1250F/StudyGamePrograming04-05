@@ -5,12 +5,12 @@ Public Class MoveComponent
 
     '単純移動パラメータ
     Private mVelocity As Vector3     '並進移動速度
-    Private mRotSpeed As Double      '回転速度
+    Private mRotSpeed As Vector3      '回転速度モーメントベクトル
 
     'ニュートン力学パラメータ
     Private mMass As Double      '質量
     Private mMoveForce As Vector3        '重心にかかる力
-    Private mRotForce As Double          '回転方向の力F　 トルク=RotForce * Radius = Imoment * RotAccel
+    Private mRotForce As Vector3         '回転方向の力Fのモーメントベクトル　 トルク=RotForce * Radius = Imoment * RotAccel
     Private mMoveResist As Double        '重心速度抵抗率(%)
     Private mRotResist As Double     '回転速度抵抗率(%)
 
