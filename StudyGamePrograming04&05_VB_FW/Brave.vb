@@ -30,7 +30,7 @@ Public Class Brave
 				angularSpeed = -Math.PI
 			End If
 			mc.SetVelocity(forwardSpeed * GetForward())
-			mc.SetRotSpeed(angularSpeed)
+			mc.SetRotSpeed(angularSpeed * GetUpward())
 		End If
 	End Sub
 	Public Overrides Sub UpdateActor(ByVal deltaTime As Double)
