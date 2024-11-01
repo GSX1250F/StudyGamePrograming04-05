@@ -103,11 +103,12 @@ Public Class Actor
         Return Vector3.Transform(Vector3.UnitX, mRotation)
     End Function
     Public Function GetStrafe() As Vector3
-        Return Vector3.Transform(Vector3.UnitY, mRotation)
+        Return Vector3.Transform(-Vector3.UnitY, mRotation)
     End Function
     Public Function GetUpward() As Vector3
         Return Vector3.Transform(Vector3.UnitZ, mRotation)
     End Function
+
     Public Function GetState() As State
         Return mState
     End Function
