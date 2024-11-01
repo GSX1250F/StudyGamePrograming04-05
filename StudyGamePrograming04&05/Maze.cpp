@@ -4,6 +4,7 @@
 #include "Brave.h"
 #include "Treasure.h"
 #include "Tile.h"
+#include "Floor.h"
 #include "CircleComponent.h"
 #include "SpriteComponent.h"
 #include "SomeSpriteComponent.h"
@@ -43,6 +44,16 @@ Maze::Maze(Game* game, int mapWidth, int mapHeight)
 
 	mBrave = new Brave(game);			//プレイヤー
 	mTreasure = new Treasure(game);		//ゴール
+
+	//床
+	for (int i = 0; i < mMapWidth; i++) 
+	{
+		for (int j = 0; j < mMapHeight; j++) 
+		{
+			Actor* floor = new Floor(game);
+			floor->SetPosition(Vector3(GetTilePos(i, j).x, GetTilePos(i,j).y, mTileSize));
+		}
+	}
 }
 
 void Maze::ActorInput(const SDL_Event& event)
