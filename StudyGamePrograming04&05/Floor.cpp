@@ -9,7 +9,6 @@ Floor::Floor(Game* game)
 {
 	SpriteComponent* sc = new SpriteComponent(this, 100);
 	sc->SetTexture(game->GetRenderer()->GetTexture("Assets/Floor.png"));
-	sc->SetVisible(true);
 	Quaternion q = Quaternion(Vector3::UnitX, Math::PiOver2);
 	SetRotation(q);
 }

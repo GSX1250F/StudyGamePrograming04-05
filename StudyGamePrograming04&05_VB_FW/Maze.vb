@@ -34,6 +34,14 @@ Public Class Maze
         mTileSize = mTiles(0)(0).GetTexSize()
         mBrave = New Brave(game)            'プレイヤー
         mTreasure = New Treasure(game)      'ゴール
+
+        '床
+        For i As Integer = 0 To mMapWidth - 1
+            For j As Integer = 0 To mMapHeight - 1
+                Dim floor = New Floor(game)
+                floor.SetPosition(New Vector3(GetTilePos(i, j).X, GetTilePos(i, j).Y, -mTileSize))
+            Next
+        Next
     End Sub
     Public Overrides Sub ActorInput(ByVal keyState As Boolean())
         If (keyState(Keys.R)) Then resetStart = True
